@@ -43,6 +43,79 @@ generate good matches , wrong matches and clasify
 
 # computing the depth map
 
+
+## installation 
+
+
+### installing povray 3.6
+
+
+
+note:  sudo apt-get install povray  installs povray 3.7 while megapov requires povray 3.6. It would be good that megapov get updated. 
+Howverver on this vlpovutils [here](http://devernay.free.fr/vision/focus/office/) he says he uses 
+ POV-Ray 3.7 RC6 as POV-Ray 3.6 generates visible artifacts between the left and right views.
+How did he manage to install megapov 1.2.1 with povray 3.7 ?
+
+	wget http://www.povray.org/redirect/www.povray.org/ftp/pub/povray/Old-Versions/Official-3.62/Unix/povray-3.6.tar.bz2
+	tar -xjf povray-3.6.tar.bz2
+	cd povray-3.6.1/
+	./configure COMPILED_BY="your name <martin.de-la-gorce@enpc.fr>"
+	make
+	sudo su
+	make install 
+	sudo sed -i 's/;none /none /g' /usr/local/etc/povray/3.6/povray.conf
+	sudo sed -i 's/restricted /;restricted /g' /usr/local/etc/povray/3.6/povray.conf
+
+### installing megapov 1.2.1
+
+	wget http://megapov.inetart.net/packages/unix/megapov-1.2.1-linux-amd64.tgz
+	tar -zxvf megapov-1.2.1-linux-amd64.tgz
+	cd megapov-1.2.1/
+	./install
+	mkdir ~/.megapov
+	mkdir ~/.megapov/1.2.1/
+	cp /usr/local/etc/megapov/1.2.1/* ~/.megapov/1.2.1/
+	sed -i 's/;none /none /g' /usr/local/etc/megapov/1.2.1/povray.conf
+	sed -i 's/restricted /;restricted /g' /usr/local/etc/megapov/1.2.1/povray.conf
+	sed -i 's/;none /none /g' ~/.megapov/1.2.1/povray.conf
+	sed -i 's/restricted /;restricted /g' ~/.megapov/1.2.1/povray.conf
+	sudo chmod -R ugo+rw /usr/local/share/megapov-1.2.1
+	sudo chmod  777 /usr/local/share/megapov-1.2.1/include/pprocess.inc # does not work , not sure why
+
+### installing vlpovutils
+
+	wget http://github.com/devernay/vlpovutils/archive/71890a3acc8501f674795285aa69669f15c95f69/master.zip --no-check-certificate
+	unzip master.zip
+	rm master.zip 
+	cd vlpovutils-master
+	sudo apt-get install libboost-dev libboost-test-dev
+	sed -i 's/CXXFLAGS=/CXXFLAGS= -std=c++11 /g' Makefile
+	
+	make
+
+### testing 
+mkdir office
+cd office
+wget http://devernay.free.fr/vision/focus/office/office-focalblur.zip
+unzip -a office-focalblur.zip
+wget  http://www.ignorancia.org/uploads/zips/office.zip
+unzip -a office.zip
+wget  http://www.ignorancia.org/uploads/zips/lightsys4c.zip
+unzip -a lightsys4c.zip
+wget http://www.ignorancia.org/uploads/zips/bookplacer.zip
+unzip -a bookplacer.zip
+wget http://www.ignorancia.org/uploads/zips/meshlath.zip
+unzip -a meshlath.zip
+megapov
+mkdir office-left office-right
+cd office-focalblur
+sudo su # other can't access /usr/local/share/megapov-1.2.1/include/pprocess.inc
+megapov +Q0 -UV +w1080 +h720 -A +L.. +L../office +L../office/maps +L../LightsysIV +K0.0 +Ioffice_stereo_megapov.pov +Ooffice_stereo1_megapov.png
+megapov +Q0 -UV +w1080 +h720 -A +L.. +L../office +L../office/maps +L../LightsysIV +K1.0 +Ioffice_stereo_megapov.pov +Ooffice_stereo2_megapov.png
+
+ cannot open the user configuration file /home/martin/.megapov/1.2.1/povray.conf
+
+
 we could use a patched version of poveray or megapov from [here](https://github.com/devernay/vlpovutils)
 original page [here](http://devernay.free.fr/hacks/povray/vlpovutils/)
 There are example of data that have been generated using this tool:
