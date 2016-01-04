@@ -15,9 +15,9 @@ Generating synthetic data allows us
 
 synthetic stereo pairs
  
-![left image[image_left.png]![right image[image_right.png]
+![left image](images/image_left.png)![right image](images/image_right.png)
 
-![left image[image_left2.png]![right image[image_right2.png]
+![left image](images/image_left2.png)![right image](images/image_right2.png)
 
 
 # limitations
