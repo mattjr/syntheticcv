@@ -46,8 +46,9 @@ def generateStereoPair(scene_left,scene_right,useRadiosity):
 
 def generateScenes():
     delta=0.1
+    nbcubes=100
     
-    light = vapory.LightSource( [2,4,-7], 'color', [1,1,1] )
+    light = vapory.LightSource( [2,4,-7], 'color', [2,2,2] )
     ambientlight=AmbientLight([1,1,1])
     
 
@@ -56,14 +57,14 @@ def generateScenes():
     rotation=[np.random.rand()*180,np.random.rand()*180,np.random.rand()*180]
 
     
-    for k in range(60):   
+    for k in range(nbcubes):   
         center=[0+np.random.randn()*3,0+np.random.randn()*2,0+np.random.rand()*2]
         #sphere=vapory.Sphere( center, 0.5, vapory.Pigment( 'color', [1,1,1]))
         #sphere=vapory.Sphere( center, 0.5, vapory.Pigment( 'color', np.random.rand(3) ),vapory.Finish('phong', 0.8,'reflection', 0.5)) 
         #objects.append(sphere) 
         #center=[0+np.random.randn()*2,0+np.random.randn()*2,0+np.random.rand()*2]
         
-        objects.append(vapory.Box( [-0.5,-0.5,-0.5], [ 0.5,0.5,0.5 ], 'rotate',rotation , 'translate',center ,vapory.Pigment( 'color', np.random.rand(3) ),vapory.Finish('phong', 0.8,'reflection', 0.0)))
+        #objects.append(vapory.Box( [-0.5,-0.5,-0.5], [ 0.5,0.5,0.5 ], 'rotate',rotation , 'translate',center ,vapory.Pigment( 'color', np.random.rand(3) ),vapory.Finish('phong', 0.8,'reflection', 0.0)))
     
     
         #center=[0+np.random.randn()*2,0+np.random.randn()*2,0+np.random.rand()*1.0]
@@ -76,7 +77,7 @@ def generateScenes():
         #objects.append(vapory.Box( [-0.5,-0.5,-0.5], [ 0.5,0.5,0.5 ], 'rotate',rotation , 'translate',center ,vapory.Pigment( 'color', np.random.rand(3) ),vapory.Finish('phong', 0.8,'reflection', 0.1)))
         #objects.append(vapory.Box( [-0.5,-0.5,-0.5], [ 0.5,0.5,0.5 ], 'rotate',rotation , 'translate',center ,vapory.Pigment( 'color',[1,1,1] )))
         #objects.append(vapory.Box( [-0.5,-0.5,-0.5], [ 0.5,0.5,0.5 ], 'rotate',rotation , 'translate',center,vapory.Texture('Rosewood')))
-        #objects.append(vapory.Box( [-0.5,-0.5,-0.5], [ 0.5,0.5,0.5 ], 'rotate',rotation , 'translate',center,vapory.Texture('White_Marble')))
+        objects.append(vapory.Box( [-0.5,-0.5,-0.5], [ 0.5,0.5,0.5 ], 'rotate',rotation , 'translate',center,vapory.Texture('White_Marble')))
     #ground = vapory.Plane([0,1,0],0, vapory.Texture('Rosewood'))
     #objects.append(ground)
     camera_left = vapory.Camera( 'location', [0-delta,0,-5], 'look_at', [0-delta,0,0] ) # <= Increase for better quality
@@ -155,7 +156,7 @@ def  disparityEvaluation(image_right,right_disparity):
 if __name__ == "__main__":
     
     scene_left,scene_right=generateScenes()
-    image_left,image_right=generateStereoPair(scene_left,scene_right,useRadiosity=False)
+    image_left,image_right=generateStereoPair(scene_left,scene_right,useRadiosity=True)
     right_disparity=estimateDisparity(image_left,image_right,method='SGBM')
     plt.ion()
     plt.figure()
@@ -166,8 +167,8 @@ if __name__ == "__main__":
     plt.imshow(d['image_left2'])
     imsave("image_left2.png",d['image_left2'])
     print "done"            
-    #imsave('image_left.png',image_left )
-    #imsave('image_right.png',image_right )
+    imsave('image_left2.png',image_left)
+    imsave('image_right2.png',image_right )
 
     plt.ion()
     plt.figure()

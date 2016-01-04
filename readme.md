@@ -1,7 +1,36 @@
+#Project's goals
+
+The goal of this project is to provide an easy-to-install python toolbox that can be used to easily generate synthetic training and testing data for various computer-vision problems such as stereo reconstruction, optical flow, multiview reconstruction, structure from motion, point and segment matching, single view surface normals estimation or shape from shading.
+
+The synthetic images are obtained through the generation of a random 3D scene using  that is rendered using the open-source ray-tracer called povray trough a simple python interface [vapory](https://github.com/Zulko/vapory).
+The ray tracer is patched to allow the obtention of the disparity map in case of stereo pairs generation. 
+
+Generating synthetic data allows us 
+* to have a complete control on the type a scenes we want to specialize our algorithm on, For example we can generate scenes that piecewise planar and that are manahattan or not. We have a control on the surface properties (lambertian  or with specularities) and we can control the amount and type of textures. 
+* to generate data in large quantities (assuming you have enough computational ressources) 
+* to have perfect ground truth with no measure error, that can be usefull when checking that there are no bugs in your stereo or optical flow code. 
+
+ 
+## examples
+
+synthetic stereo pairs
+ 
+![left image[image_left.png]![right image[image_right.png]
+
+![left image[image_left2.png]![right image[image_right2.png]
+
+
+# limitations
+
+The scenes are generated in the pov-ray format using a constructive solid geometry (CSG) description of the surface i.e. using unions and differences of basic 3D shapes such as sphere cubes etc and thus there is no triangulated surface description of the scene.
+This could be overcome by allowing the user the generate random scene that are triangulated surfaces, either by generating directly triangulated surfaces or by converting the CSG into a triangulated surface before rendering and by giving access to the triangulated surface to the user. 
+
 
 # getting data
 
-* create a subfolder data or a symbolic link data where the datz will be stored
+
+
+* create a subfolder data or a symbolic link data where the data will be stored
 * get data by running setup.py
 
 	python setup.py
@@ -13,7 +42,7 @@ synthetic office and living room images + depth [here](http://www.doc.ic.ac.uk/~
 the paper describing the image generation process can be found [here](http://www.doc.ic.ac.uk/~ahanda/VaFRIC/icra2014.pdf)
 it has been generated wit POVray http://www.povray.org/
 improved version of thes synthetic data with additional what can be found [here](http://redwood-data.org/indoor/dataset.html)
-explaination on how to create a camera paramterized as usually done in computer vision in povray in http://www.inf.u-szeged.hu/projectdirs/kepaf2011/pdfs/S07_02.pdf
+explaination on how to create a camera paramterized as usually done in computer vision in povray in [here](http://www.inf.u-szeged.hu/projectdirs/kepaf2011/pdfs/S07_02.pdf)
 gettign data from http://robotvault.bitbucket.org/
 but there is no texture for now...
 
