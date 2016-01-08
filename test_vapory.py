@@ -169,6 +169,7 @@ if __name__ == "__main__":
     print "done"            
     imsave('image_left2.png',image_left)
     imsave('image_right2.png',image_right )
+    imsave('right_disparity.png',right_disparity )
 
     plt.ion()
     plt.figure()

@@ -74,7 +74,12 @@ but there is no texture for now...
 	pip install vapory
 
 
+Note vapory calls povray , we could modify it to call the patched version of megapov (see below) in order to generate the dpeth file and recover the depth information in a numpy array.
+we can cheat by overwritting the povray executable by a link to the patched magapov executable
 
+	sudo ln -s /usr/local/bin/megapov /usr/local/bin/povray
+
+we need then to look for the depth file in the temp folder ?
 
 # Getting the disparity map
 
