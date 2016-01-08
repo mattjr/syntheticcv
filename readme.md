@@ -1,17 +1,19 @@
-#Project's goals
+# Project's goals
 
 The goal of this project is to provide an easy-to-install python toolbox that can be used to easily generate synthetic training and testing data for various computer-vision problems such as stereo reconstruction, optical flow, multiview reconstruction, structure from motion, point and segment matching, single view surface normals estimation or shape from shading.
 
-The synthetic images are obtained through the generation of a random 3D scene using  that is rendered using the open-source ray-tracer called povray trough a simple python interface [vapory](https://github.com/Zulko/vapory).
-The ray tracer is patched to allow the obtention of the disparity map in case of stereo pairs generation. 
+The synthetic images are obtained through the generation of a random 3D scene using  that is rendered using the open-source ray-tracer called povray trough a simple python interface to povray called [vapory](https://github.com/Zulko/vapory).
+The povray ray tracer is patched using [vlpovutils](https://github.com/devernay/vlpovutils) to allow the obtention of the disparity map in case of stereo pairs generation. 
 
 Generating synthetic data allows us 
-* to have a complete control on the type a scenes we want to specialize our algorithm on, For example we can generate scenes that piecewise planar and that are manahattan or not. We have a control on the surface properties (lambertian  or with specularities) and we can control the amount and type of textures. 
-* to generate data in large quantities (assuming you have enough computational ressources) 
-* to have perfect ground truth with no measure error, that can be usefull when checking that there are no bugs in your stereo or optical flow code. 
+	* to have a complete control on the type a scenes we want to specialize our algorithm on, For example we can generate scenes that piecewise planar and that are manahattan or not. We have a control on the surface properties (lambertian  or with specularities) and we can control the amount and type of textures. 
+
+	* to generate data in large quantities (assuming you have enough computational ressources) 
+
+	* to have perfect ground truth with no measure error, that can be usefull when checking that there are no bugs in your stereo or optical flow code. 
 
  
-## examples
+## Examples
 
 synthetic stereo pairs
  
@@ -37,23 +39,19 @@ disparity:
 
 
 
-# limitations
+# Limitations
 
-The scenes are generated in the pov-ray format using a constructive solid geometry (CSG) description of the surface i.e. using unions and differences of basic 3D shapes such as sphere cubes etc and thus there is no triangulated surface description of the scene.
+The scenes are generated in the pov-ray format using a constructive solid geometry (CSG) description of the surface i.e. using unions and differences of basic 3D shapes such as sphere cubes etc and thus there is no triangulated surface description of the scene. This can be a problem if one wants to use the triangulated surface to generate disparity maps or displacement fields.
 This could be overcome by allowing the user the generate random scene that are triangulated surfaces, either by generating directly triangulated surfaces or by converting the CSG into a triangulated surface before rendering and by giving access to the triangulated surface to the user. 
+However  i could not find tool to generate meshes from povrayfile (which would require some solid-geometry-to-mesh tool such as  openSCAD or [solidPython](https://github.com/SolidCode/SolidPython)). 
 
 
-# getting data
+An approach would consist in using only meshed and no solid geometry , and then use CGAL to generate the depth map using raytracing in CGAL, or use some other renderer that gives access to the zbuffer.
+This has the advantage of beeing more flexible that using a pached version of povray and would allow to get disparities in  hidden parts too. 
 
 
 
-* create a subfolder data or a symbolic link data where the data will be stored
-* get data by running setup.py
-
-	python setup.py
-
-
-# references and links
+# References and links
 
 synthetic office and living room images + depth [here](http://www.doc.ic.ac.uk/~ahanda/VaFRIC/iclnuim.html)
 the paper describing the image generation process can be found [here](http://www.doc.ic.ac.uk/~ahanda/VaFRIC/icra2014.pdf)
@@ -63,121 +61,201 @@ explaination on how to create a camera paramterized as usually done in computer 
 gettign data from http://robotvault.bitbucket.org/
 but there is no texture for now...
 
-# install
+# Install
 
 
-* install POVray  See [here](http://www.povray.org/download/) for the Windows binaries. For Linux/MacOS you must compile the source.
+* install POVray 3.7  See [here](http://www.povray.org/download/) for the Windows binaries. For Linux/MacOS you must compile the source or you can use 
+
+	sudo apt-get install povray  
+
 * install vaporay a python interface to POVray	
 
 	pip install vapory
 
-* install OpenMVG ? 
-* install PMVS2
-
-# 
-run PMVS2 on synthetic data
-run CMPMVS
-run other stereo algorithms ? 
-run edge matching ? 
-compute error with ground truth on the depth
-run manhattan world stereo ? 
-
-# test training ?
-
-generate good matches , wrong matches and clasify  
-
-
-# computing the depth map
-
-
-## installation 
-
-
-### installing povray 3.6
 
 
 
-note:  sudo apt-get install povray  installs povray 3.7 while megapov requires povray 3.6. It would be good that megapov get updated. 
-Howverver on this vlpovutils [here](http://devernay.free.fr/vision/focus/office/) he says he uses 
- POV-Ray 3.7 RC6 as POV-Ray 3.6 generates visible artifacts between the left and right views.
-How did he manage to install megapov 1.2.1 with povray 3.7 ?
+# Getting the disparity map
 
-	wget http://www.povray.org/redirect/www.povray.org/ftp/pub/povray/Old-Versions/Official-3.62/Unix/povray-3.6.tar.bz2
-	tar -xjf povray-3.6.tar.bz2
-	cd povray-3.6.1/
-	./configure COMPILED_BY="your name <martin.de-la-gorce@enpc.fr>"
-	make
-	sudo su
-	make install 
-	sudo sed -i 's/;none /none /g' /usr/local/etc/povray/3.6/povray.conf
-	sudo sed -i 's/restricted /;restricted /g' /usr/local/etc/povray/3.6/povray.conf
-
-### installing megapov 1.2.1
-
-	wget http://megapov.inetart.net/packages/unix/megapov-1.2.1-linux-amd64.tgz
-	tar -zxvf megapov-1.2.1-linux-amd64.tgz
-	cd megapov-1.2.1/
-	./install
-	mkdir ~/.megapov
-	mkdir ~/.megapov/1.2.1/
-	cp /usr/local/etc/megapov/1.2.1/* ~/.megapov/1.2.1/
-	sed -i 's/;none /none /g' /usr/local/etc/megapov/1.2.1/povray.conf
-	sed -i 's/restricted /;restricted /g' /usr/local/etc/megapov/1.2.1/povray.conf
-	sed -i 's/;none /none /g' ~/.megapov/1.2.1/povray.conf
-	sed -i 's/restricted /;restricted /g' ~/.megapov/1.2.1/povray.conf
-	sudo chmod -R ugo+rw /usr/local/share/megapov-1.2.1
-	sudo chmod  777 /usr/local/share/megapov-1.2.1/include/pprocess.inc # does not work , not sure why
-
-### installing vlpovutils
-
-	wget http://github.com/devernay/vlpovutils/archive/71890a3acc8501f674795285aa69669f15c95f69/master.zip --no-check-certificate
-	unzip master.zip
-	rm master.zip 
-	cd vlpovutils-master
-	sudo apt-get install libboost-dev libboost-test-dev
-	sed -i 's/CXXFLAGS=/CXXFLAGS= -std=c++11 /g' Makefile
-	
-	make
-
-### testing 
-mkdir office
-cd office
-wget http://devernay.free.fr/vision/focus/office/office-focalblur.zip
-unzip -a office-focalblur.zip
-wget  http://www.ignorancia.org/uploads/zips/office.zip
-unzip -a office.zip
-wget  http://www.ignorancia.org/uploads/zips/lightsys4c.zip
-unzip -a lightsys4c.zip
-wget http://www.ignorancia.org/uploads/zips/bookplacer.zip
-unzip -a bookplacer.zip
-wget http://www.ignorancia.org/uploads/zips/meshlath.zip
-unzip -a meshlath.zip
-megapov
-mkdir office-left office-right
-cd office-focalblur
-sudo su # other can't access /usr/local/share/megapov-1.2.1/include/pprocess.inc
-megapov +Q0 -UV +w1080 +h720 -A +L.. +L../office +L../office/maps +L../LightsysIV +K0.0 +Ioffice_stereo_megapov.pov +Ooffice_stereo1_megapov.png
-megapov +Q0 -UV +w1080 +h720 -A +L.. +L../office +L../office/maps +L../LightsysIV +K1.0 +Ioffice_stereo_megapov.pov +Ooffice_stereo2_megapov.png
-
- cannot open the user configuration file /home/martin/.megapov/1.2.1/povray.conf
-
-
-we could use a patched version of poveray or megapov from [here](https://github.com/devernay/vlpovutils)
-original page [here](http://devernay.free.fr/hacks/povray/vlpovutils/)
+In order to obtain a ground truth disparity map associated to a synthetic stereo pair of image, you will need to use a patched version of megapov using [vlpovutils]((https://github.com/devernay/vlpovutils) (original page [here](http://devernay.free.fr/hacks/povray/vlpovutils/)), with megapov beeing already a modified version of povray.
 There are example of data that have been generated using this tool:
 * the povray office with depth maps [here](http://devernay.free.fr/vision/focus/office/)
 * a patio [here](http://devernay.free.fr/vision/focus/patio/) 
 the use of the vlpovutils code to generate depths maps is not very well documented . all the links i found to the annotation patch by Dr Andrea Vedaldi point to [this](http://www.robots.ox.ac.uk/~vedaldi/code/vlpovy.html) page that does not exist anymore 
 maybe the most detailed instruction are the office and patio pages
-Another approach would consist in using only meshed an no solid geometry , and then use CGAL to generate the depth map using raytracing in CGAL.
-This has the advantage of beeing more flexible ? of getting hiddent part depths too ? 
-We could also generate meshes from solid geomtry desciption of the scene but  i could not find tool to generate meshes from povrayfile (which would require some solid geometry to mesh tool , maybe using openSCAD or [solidPython](https://github.com/SolidCode/SolidPython)). 
+
+
+## Installation
+
+
+following instructions from the readme in https://github.com/devernay/vlpovutils/tree/master/povray
+
+
+### getting the patches from vlpovutils
+
+we first download the vlpovutils source code that contains the patches that we will apply to povray and megapov
+
+	wget http://github.com/devernay/vlpovutils/archive/71890a3acc8501f674795285aa69669f15c95f69/master.zip --no-check-certificate
+	unzip master.zip
+	rm master.zip 
+
+### installing libpng 1.5
+
+
+compiling povray 3.6 requires libpng 1.5. The version we get in january 2015 through apt-get is libpng12, so we need to compile libpng 1.5
+
+	wget http://sourceforge.net/projects/libpng/files/libpng15/1.5.26/libpng-1.5.26.tar.gz
+	tar xf libpng-1.5.26.tar.gz	
+	cd libpng-1.5.26
+	./configure --prefix=/usr/local/libpng
+	make check
+	sudo make install
+	make check
+	sudo updatedb
+	sudo ln -s /usr/local/libpng/lib/libpng15.so.15 /usr/lib/libpng15.so.15
+	sudo ln -s /usr/local/libpng/lib/libpng15.so.15 /usr/local/libpng/lib/libpng12.so
+
+### installing patched povray 3.6
 
 
 
-## some models available online
+note:  sudo apt-get install povray  installs povray 3.7 while megapov requires povray 3.6. It would be good to update megapov. 
+However on this vlpovutils page [here](http://devernay.free.fr/vision/focus/office/) it is said thayt they uses 
+ POV-Ray 3.7 RC6 as POV-Ray 3.6 generates visible artifacts between the left and right views.
+How did he manage to install megapov 1.2.1 with povray 3.7 -
 
 
+	wget http://www.povray.org/ftp/pub/povray/Old-Versions/Official-3.62/Unix/povray-3.6.1.tar.bz2
+	tar -jxjf povray-3.6.1.tar.bz2
+	cd povray-3.6.1/
+	patch -p1 < ../vlpovutils-master/povray/megapov-focalblur.patch	
+	patch -p0 < ../vlpovutils-master/povray/povray-3.6.1-png15.patch
+	export CPPFLAGS=-I/usr/local/libpng/include
+	export LDFLAGS=-L/usr/local/libpng/lib
+	./configure --prefix=/opt/megapov --with-x COMPILED_BY="martin.de-la-gorce@enpc.fr" 
+	make
+	sudo make install 
+	sudo sed -i 's/;none /none /g' /opt/megapov/etc/povray/3.6/povray.conf
+	sudo sed -i 's/restricted /;restricted /g' /opt/megapov/etc/povray/3.6/povray.conf
+
+you should now have a povray executable in the sub folder unix/megapov and in /opt/megapov/bin
+
+
+Remark :
+
+if we do not use the lines 
+	export CPPFLAGS=-I/usr/local/libpng/include
+	export LDFLAGS=-L/usr/local/libpng/lib
+we get the following error
+	png_pov.cpp:1352:96: error: ‘png_get_current_row_number’ was not declared in this scope
+   line_number = png_get_y_offset_pixels(png_ptr, info_ptr) + png_get_current_row_number(png_ptr);
+
+
+
+### installing patched megapov 1.2.1 and vlpovutils
+
+
+
+	wget http://megapov.inetart.net/packages/unix/megapov-1.2.1.tgz
+	tar -zxvf megapov-1.2.1.tgz
+	cd megapov-1.2.1/
+	patch -p1  < ../vlpovutils-master/povray/megapov-annotation-0.2.patch 
+	patch -p1 < ../vlpovutils-master/povray/megapov-focalblur.patch
+	patch -p1 < ../megapov-png15.patch
+	export CPPFLAGS=-I/usr/local/libpng/include
+	export LDFLAGS=-L/usr/local/libpng/lib
+	./configure --prefix=/opt/megapov --with-x COMPILED_BY="martin.de-la-gorce@enpc.fr"  --disable-lib-checks 
+
+
+	make 
+	sudo make install
+
+you should now have a megapov executable in the sub folder unix/megapov and in /opt/megapov/bin
+copying executable and default options file after modification
+	
+	sudo cp /opt/megapov/bin/megapov /usr/local/bin
+	sudo sed -i 's/;none /none /g' /opt/megapov/etc/megapov/1.2.1/povray.conf
+	sudo sed -i 's/restricted /;restricted /g' /opt/megapov/etc/megapov/1.2.1/povray.conf
+	sudo sed -i '$ a\ Library_Path="/opt/megapov/share/povray-3.6"' /opt/megapov/etc/megapov/1.2.1/povray.ini
+	sudo sed -i '$ a\ Library_Path="/opt/megapov/share/povray-3.6/ini"' /opt/megapov/etc/megapov/1.2.1/povray.ini
+	sudo sed -i '$ a\ Library_Path="/opt/megapov/share/povray-3.6/include"' /opt/megapov/etc/megapov/1.2.1/povray.ini
+	sudo chmod  777 /usr/local/bin/megapov
+	sudo mkdir ~/.megapov
+	sudo mkdir ~/.megapov/1.2.1/
+	sudo cp /opt/megapov/etc/megapov/1.2.1/povray.ini ~/.megapov/1.2.1/povray.ini
+	sudo cp /opt/megapov/etc/megapov/1.2.1/povray.conf ~/.megapov/1.2.1/povray.conf
+
+
+
+### compiling lpov_motionfield2
+
+	cd vlpovutils-master
+	sudo apt-get install libboost-dev libboost-test-dev
+	sed -i 's/CXXFLAGS=/CXXFLAGS= -std=c++11 /g' Makefile	
+	make
+	sudo cp vlpov_motionfield2 /usr/local/bin
+	sudo chmod  777 /usr/local/bin/vlpov_motionfield2
+
+
+
+## testing 
+
+
+
+following the example from [here](http://devernay.free.fr/vision/focus/office/) i'm trying to generate a stereo pair with the corresponding disparity map
+we first fetch the data and create folder
+	mkdir data
+	cd data
+	mkdir office
+	cd office
+	wget http://devernay.free.fr/vision/focus/office/office-focalblur.zip
+	unzip -a office-focalblur.zip
+	cd office-focalblur
+	wget  http://www.ignorancia.org/uploads/zips/office.zip
+	unzip -a office.zip
+	wget  http://www.ignorancia.org/uploads/zips/lightsys4c.zip
+	unzip -a lightsys4c.zip
+	wget http://www.ignorancia.org/uploads/zips/bookplacer.zip
+	unzip -a bookplacer.zip
+	wget http://www.ignorancia.org/uploads/zips/meshlath.zip
+	unzip -a meshlath.zip	
+	mkdir office-left office-right
+	
+we render the scene with very low quality in order to quickly get the depth information
+
+	megapov +Q0 -UV +w320 +h240 -A +L. +L./office +L./office/maps +L./LightsysIV +L./office-left +K0.0 +Ioffice_stereo_megapov.pov +Ooffice_stereo1_megapov.png
+	megapov +Q0 -UV +w320 +h240 -A +L. +L./office +L./office/maps +L./LightsysIV +L./office-right +K1.0 +Ioffice_stereo_megapov.pov +Ooffice_stereo2_megapov.png
+
+	
+
+this should have create 3 file in each subfolder office-left: office_stereo1_megapov.png,office_stereo1_megapov.txt,office_stereo1_megapov.depth
+and three file in office-right. I you don't have te txt and depth files generated you may not be calling the patched megapov version (using megapov-annotation-0.2.patch see above) 
+
+we can now get the occlusion masks 
+
+	vlpov_motionfield2 office-left/office_stereo1_megapov office-right/office_stereo2_megapov
+
+We can also render the image with bettwer qualities and different focus zones
+
+megapov +FN16 +Q9 -UV +w320 +h240 -A +L. +L./office +L./office/maps +L./LightsysIV +L./office-left +K0.0 +Ioffice_stereo_far.pov +Ooffice_stereo1_far.png
+megapov +FN16 +Q9 -UV +w320 +h240 -A +L. +L./office +L./office/maps +L./LightsysIV +L./office-left +K0.0 +Ioffice_stereo_near.pov +Ooffice_stereo1_near.png
+megapov +FN16 +Q9 -UV +w320 +h240 -A +L. +L./office +L./office/maps +L./LightsysIV +L./office-left +K0.0 +Ioffice_stereo_near2.pov +Ooffice_stereo1_near2.png
+megapov +FN16 +Q9 -UV +w320 +h240 -A +L. +L./office +L./office/maps +L./LightsysIV +L./office-left +K0.0 +Ioffice_stereo_far2.pov +Ooffice_stereo1_far2.png
+megapov +FN16 +Q9 -UV +w320 +h240 +A0.0 +J0.0 -A +L. +L./office +L./office/maps +L./LightsysIV +L./office-left +K0.0 +Ioffice_stereo.pov +Ooffice_stereo1_all.png
+megapov +FN16 +Q9 -UV +w320 +h240 +L. +L./office +L./office/maps +L./LightsysIV +L./office-right +K1.0 +Ioffice_stereo_far.pov +Ooffice_stereo2_far.png
+megapov +FN16 +Q9 -UV +w320 +h240 +L. +L./office +L./office/maps +L./LightsysIV +L./office-right +K1.0 +Ioffice_stereo_near.pov +Ooffice_stereo2_near.png
+megapov +FN16 +Q9 -UV +w320 +h240 +L. +L./office +L./office/maps +L./LightsysIV +L./office-right +K1.0 +Ioffice_stereo_near2.pov +Ooffice_stereo2_near2.png
+megapov +FN16 +Q9 -UV +w320 +h240 +L. +L./office +L./office/maps +L./LightsysIV +L./office-right +K1.0 +Ioffice_stereo_far2.pov +Ooffice_stereo2_far2.png
+megapov +FN16 +Q9 -UV +w320 +h240 +A0.0 +J0.0 +L. +L./office +L./office/maps +L./LightsysIV +L./office-right +K1.0 +Ioffice_stereo.pov +Ooffice_stereo2_all.png
+
+
+
+
+
+
+# some models available online
+
+we could enrich our synthetic scene using existing 3D models
 
 archive3D.net archibase.co
 
