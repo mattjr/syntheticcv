@@ -74,14 +74,14 @@ but there is no texture for now...
 	pip install vapory
 
 
-Note vapory calls povray , we could modify it to call the patched version of megapov (see below) in order to generate the dpeth file and recover the depth information in a numpy array.
+Note vapory calls povray , we could modify it to call the patched version of megapov (see below) in order to generate the depth file and recover the depth information in a numpy array.
 we can cheat by overwritting the povray executable by a link to the patched magapov executable
 
 	sudo ln -s /usr/local/bin/megapov /usr/local/bin/povray
 
 we need then to look for the depth file in the temp folder ?
 
-# Getting the disparity map
+# Getting the depths and disparity maps
 
 In order to obtain a ground truth disparity map associated to a synthetic stereo pair of image, you will need to use a patched version of megapov using [vlpovutils]((https://github.com/devernay/vlpovutils) (original page [here](http://devernay.free.fr/hacks/povray/vlpovutils/)), with megapov beeing already a modified version of povray.
 There are example of data that have been generated using this tool:
@@ -200,7 +200,9 @@ copying executable and default options file after modification
 	sed -i 's/CXXFLAGS=/CXXFLAGS= -std=c++11 /g' Makefile	
 	make
 	sudo cp vlpov_motionfield2 /usr/local/bin
-	sudo chmod  777 /usr/local/bin/vlpov_motionfield2
+	sudo chmod  777 /usr/local/bin/motionfield2
+	sudo cp vlpov_project /usr/local/bin
+	sudo chmod  777 /usr/local/bin/vlpov_project
 
 
 
@@ -247,11 +249,24 @@ we can now get the occlusion masks
 	vlpov_motionfield2 office-left/office_stereo1_megapov office-right/office_stereo2_megapov
 
 this creates 3 files 	office_stereo1_megapov.office_stereo2_megapov.occ.tif (occlusion mask), office_stereo1_megapov.office_stereo2_megapov.my.tif (disparity map in direction y, it should be all zeros but i get values of about 0.00001) and office_stereo1_megapov.office_stereo2_megapov.mx.tif (disparity map in direction x ? )
-the disparity maps are 32bit floating point tif files which cannot be visualize in the default ubuntu image viewer, however you can read ans export them to png images using read_depth.py
+the motion field images are 32bit floating point tif files which cannot be visualize in the default ubuntu image viewer, however you can read ans export them to png images using read_depth.py
 
+occlusion map:
 ![occlusion](images/occlusion.png)
-![idparity my](images/disparity_my.png)
-![idparity mx](images/disparity_mx.png)
+
+disparity my:
+![otion field my](images/motionfield_my.png)
+
+disparity mx:
+![motion field mx](images/motionfield_mx.png)
+
+getting the disparity maps
+	
+	(echo -100 110 -20; echo 65 289 165) | vlpov_project office-left/office_stereo1_megapov office-right/office_stereo2_megapov
+
+this seems to only print the following information, without file beeing created. Is that information combined with thr motion field enought to create the disparity maps ? 
+	159.373 275.731 534.022 0.25369 -1.16108e-05
+	161.238 275.731 267.011 -3.47487 1.63918e-06
 
 
 We can also render the image with better qualities and different focus zones
@@ -268,6 +283,11 @@ We can also render the image with better qualities and different focus zones
 	megapov +FN16 +Q9 -UV +w320 +h240 +A0.0 +J0.0 +L. +L./office +L./office/maps +L./LightsysIV +L./office-right +K1.0 +Ioffice_stereo.pov +Ooffice_stereo2_all.png
 
 
+the rendering at this level of quality is very long to run, about an hour for one image, despite the small resolution.
+I have the impression that is is much slower that the precompiled version of povray 3.7 , is it so ? 
+
+megapov +FN16 +Q0 -UV +w320 +h240 -A +L. +L./office +L./office/maps +L./LightsysIV +L./office-left +K0.0 +Ioffice_stereo_far.pov +Ooffice_stereo1_far.png
+megapov  +Q0 -UV +w320 +h240 -A +L. +L./office +L./office/maps +L./LightsysIV +L./office-left +K0.0 +Ioffice_stereo_far.pov +Ooffice_stereo1_far.png
 
 
 #TODO
