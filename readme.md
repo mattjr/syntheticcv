@@ -249,7 +249,7 @@ we can now get the occlusion masks
 this creates 3 files 	office_stereo1_megapov.office_stereo2_megapov.occ.tif (occlusion mask), office_stereo1_megapov.office_stereo2_megapov.my.tif (disparity map in direction y, it should be all zeros but i get values of about 0.00001) and office_stereo1_megapov.office_stereo2_megapov.mx.tif (disparity map in direction x ? )
 the disparity maps are 32bit floating point tif files which cannot be visualize in the default ubuntu image viewer, however you can read ans export them to png images using read_depth.py
 
-![occlusion](images/office_occ.png)
+![occlusion](images/office_occ.tif)
 ![idparity my](images/disparity_my.png)
 ![idparity mx](images/disparity_mx.png)
 
