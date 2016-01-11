@@ -235,14 +235,26 @@ we render the scene with very low quality in order to quickly get the depth info
 
 	
 
-this should have create 3 file in each subfolder office-left: office_stereo1_megapov.png,office_stereo1_megapov.txt,office_stereo1_megapov.depth
-and three file in office-right. I you don't have te txt and depth files generated you may not be calling the patched megapov version (using megapov-annotation-0.2.patch see above) 
+this should have create 3 files in each subfolder office-left: office_stereo1_megapov.png,office_stereo1_megapov.txt,office_stereo1_megapov.depth
+and three similar files in office-right. I you don't have te txt and depth files generated you may not be calling the patched megapov version (using megapov-annotation-0.2.patch see above).
+The depth file containe the distances to the camera for each pixel in a little indian floatting point format. You can visualize the depth map using read_depth.py
+
+![left depth image](images/depth_left.png) 
+
 
 we can now get the occlusion masks 
 
 	vlpov_motionfield2 office-left/office_stereo1_megapov office-right/office_stereo2_megapov
 
-We can also render the image with bettwer qualities and different focus zones
+this creates 3 files 	office_stereo1_megapov.office_stereo2_megapov.occ.tif (occlusion mask), office_stereo1_megapov.office_stereo2_megapov.my.tif (disparity map in direction y, it should be all zeros but i get values of about 0.00001) and office_stereo1_megapov.office_stereo2_megapov.mx.tif (disparity map in direction x ? )
+the disparity maps are 32bit floating point tif files which cannot be visualize in the default ubuntu image viewer, however you can read ans export them to png images using read_depth.py
+
+![occlusion](images/office_occ.png)
+![idparity my](images/disparity_my.png)
+![idparity mx](images/disparity_mx.png)
+
+
+We can also render the image with better qualities and different focus zones
 
 	megapov +FN16 +Q9 -UV +w320 +h240 -A +L. +L./office +L./office/maps +L./LightsysIV +L./office-left +K0.0 +Ioffice_stereo_far.pov +Ooffice_stereo1_far.png
 	megapov +FN16 +Q9 -UV +w320 +h240 -A +L. +L./office +L./office/maps +L./LightsysIV +L./office-left +K0.0 +Ioffice_stereo_near.pov +Ooffice_stereo1_near.png
@@ -258,7 +270,13 @@ We can also render the image with bettwer qualities and different focus zones
 
 
 
+#TODO
 
+* modify vapory to use the patched megapov executable (or use the symbolic link trick discussed above) and add the code to read the depth map, disparity maps and occlusion map (read_depth/py) to the vapory code, to make a nice python interface. We need to add a local copy of vapory to the code to do that.
+
+* make a script to make the full installation process easier using pip install. 
+
+* maybe add the code of vapory, megapov and vlpovutils to the repository to make the installation easier ? 
 
 # some models available online
 
