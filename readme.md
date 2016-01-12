@@ -70,20 +70,12 @@ but there is no texture for now...
 in a terminal go in the folder than contains the script install.sh and run it by typing 
 	./install.sh
 
-after running the script you should have 
-* a  povray executable in the sub folder unix/megapov and in /opt/megapov/bin
-* a megapov executable in the sub folder unix/megapov and in /opt/megapov/bin copying executable and default options file after modification
+after running the script you should have the four executables
+	/usr/local/bin/povray
+	/usr/local/bin/megapov
+	/usr/local/bin/motionfield2
+	/usr/local/bin/vlpov_project
 
-
-
-# Getting the depths and disparity maps
-
-In order to obtain a ground truth disparity map associated to a synthetic stereo pair of image, you will need to use a patched version of megapov using [vlpovutils]((https://github.com/devernay/vlpovutils) (original page [here](http://devernay.free.fr/hacks/povray/vlpovutils/)), with megapov beeing already a modified version of povray.
-There are example of data that have been generated using this tool:
-* the povray office with depth maps [here](http://devernay.free.fr/vision/focus/office/)
-* a patio [here](http://devernay.free.fr/vision/focus/patio/) 
-the use of the vlpovutils code to generate depths maps is not very well documented . all the links i found to the annotation patch by Dr Andrea Vedaldi point to [this](http://www.robots.ox.ac.uk/~vedaldi/code/vlpovy.html) page that does not exist anymore 
-maybe the most detailed instruction are the office and patio pages
 
 
 ## testing 
