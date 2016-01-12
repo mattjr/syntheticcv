@@ -65,21 +65,16 @@ but there is no texture for now...
 # Install
 
 
-* install POVray 3.7  See [here](http://www.povray.org/download/) for the Windows binaries. For Linux/MacOS you must compile the source or you can use 
+## linux (tested on ubuntu)
 
-	sudo apt-get install povray  
+in a terminal go in the folder than contains the script install.sh and run it by typing 
+	./install.sh
 
-* install vaporay a python interface to POVray	
+after running the script you should have 
+* a  povray executable in the sub folder unix/megapov and in /opt/megapov/bin
+* a megapov executable in the sub folder unix/megapov and in /opt/megapov/bin copying executable and default options file after modification
 
-	pip install vapory
 
-
-Note vapory calls povray , we could modify it to call the patched version of megapov (see below) in order to generate the depth file and recover the depth information in a numpy array.
-we can cheat by overwritting the povray executable by a link to the patched magapov executable
-
-	sudo ln -s /usr/local/bin/megapov /usr/local/bin/povray
-
-we need then to look for the depth file in the temp folder ?
 
 # Getting the depths and disparity maps
 
@@ -89,121 +84,6 @@ There are example of data that have been generated using this tool:
 * a patio [here](http://devernay.free.fr/vision/focus/patio/) 
 the use of the vlpovutils code to generate depths maps is not very well documented . all the links i found to the annotation patch by Dr Andrea Vedaldi point to [this](http://www.robots.ox.ac.uk/~vedaldi/code/vlpovy.html) page that does not exist anymore 
 maybe the most detailed instruction are the office and patio pages
-
-
-## Installation
-
-
-following instructions from the readme in https://github.com/devernay/vlpovutils/tree/master/povray
-
-
-### getting the patches from vlpovutils
-
-we first download the vlpovutils source code that contains the patches that we will apply to povray and megapov
-
-	wget http://github.com/devernay/vlpovutils/archive/71890a3acc8501f674795285aa69669f15c95f69/master.zip --no-check-certificate
-	unzip master.zip
-	rm master.zip 
-
-### installing libpng 1.5
-
-
-compiling povray 3.6 requires libpng 1.5. The version we get in january 2015 through apt-get is libpng12, so we need to compile libpng 1.5
-
-	wget http://sourceforge.net/projects/libpng/files/libpng15/1.5.26/libpng-1.5.26.tar.gz
-	tar xf libpng-1.5.26.tar.gz	
-	cd libpng-1.5.26
-	./configure --prefix=/usr/local/libpng
-	make check
-	sudo make install
-	make check
-	sudo updatedb
-	sudo ln -s /usr/local/libpng/lib/libpng15.so.15 /usr/lib/libpng15.so.15
-	sudo ln -s /usr/local/libpng/lib/libpng15.so.15 /usr/local/libpng/lib/libpng12.so
-
-### installing patched povray 3.6
-
-
-
-note:  sudo apt-get install povray  installs povray 3.7 while megapov requires povray 3.6. It would be good to update megapov. 
-However on this vlpovutils page [here](http://devernay.free.fr/vision/focus/office/) it is said thayt they uses 
- POV-Ray 3.7 RC6 as POV-Ray 3.6 generates visible artifacts between the left and right views.
-How did he manage to install megapov 1.2.1 with povray 3.7 -
-
-
-	wget http://www.povray.org/ftp/pub/povray/Old-Versions/Official-3.62/Unix/povray-3.6.1.tar.bz2
-	tar -jxjf povray-3.6.1.tar.bz2
-	cd povray-3.6.1/
-	patch -p1 < ../vlpovutils-master/povray/megapov-focalblur.patch	
-	patch -p0 < ../vlpovutils-master/povray/povray-3.6.1-png15.patch
-	export CPPFLAGS=-I/usr/local/libpng/include
-	export LDFLAGS=-L/usr/local/libpng/lib
-	./configure --prefix=/opt/megapov --with-x COMPILED_BY="martin.de-la-gorce@enpc.fr" 
-	make
-	sudo make install 
-	sudo sed -i 's/;none /none /g' /opt/megapov/etc/povray/3.6/povray.conf
-	sudo sed -i 's/restricted /;restricted /g' /opt/megapov/etc/povray/3.6/povray.conf
-
-you should now have a povray executable in the sub folder unix/megapov and in /opt/megapov/bin
-
-
-Remark :
-
-if we do not use the lines 
-	export CPPFLAGS=-I/usr/local/libpng/include
-	export LDFLAGS=-L/usr/local/libpng/lib
-we get the following error
-	png_pov.cpp:1352:96: error: ‘png_get_current_row_number’ was not declared in this scope
-   line_number = png_get_y_offset_pixels(png_ptr, info_ptr) + png_get_current_row_number(png_ptr);
-
-
-
-### installing patched megapov 1.2.1 and vlpovutils
-
-
-
-	wget http://megapov.inetart.net/packages/unix/megapov-1.2.1.tgz
-	tar -zxvf megapov-1.2.1.tgz
-	cd megapov-1.2.1/
-	patch -p1  < ../vlpovutils-master/povray/megapov-annotation-0.2.patch 
-	patch -p1 < ../vlpovutils-master/povray/megapov-focalblur.patch
-	patch -p1 < ../megapov-png15.patch
-	export CPPFLAGS=-I/usr/local/libpng/include
-	export LDFLAGS=-L/usr/local/libpng/lib
-	./configure --prefix=/opt/megapov --with-x COMPILED_BY="martin.de-la-gorce@enpc.fr"  --disable-lib-checks 
-
-
-	make 
-	sudo make install
-
-you should now have a megapov executable in the sub folder unix/megapov and in /opt/megapov/bin
-copying executable and default options file after modification
-	
-	sudo cp /opt/megapov/bin/megapov /usr/local/bin
-	sudo sed -i 's/;none /none /g' /opt/megapov/etc/megapov/1.2.1/povray.conf
-	sudo sed -i 's/restricted /;restricted /g' /opt/megapov/etc/megapov/1.2.1/povray.conf
-	sudo sed -i '$ a\ Library_Path="/opt/megapov/share/povray-3.6"' /opt/megapov/etc/megapov/1.2.1/povray.ini
-	sudo sed -i '$ a\ Library_Path="/opt/megapov/share/povray-3.6/ini"' /opt/megapov/etc/megapov/1.2.1/povray.ini
-	sudo sed -i '$ a\ Library_Path="/opt/megapov/share/povray-3.6/include"' /opt/megapov/etc/megapov/1.2.1/povray.ini
-	sudo chmod  777 /usr/local/bin/megapov
-	sudo mkdir ~/.megapov
-	sudo mkdir ~/.megapov/1.2.1/
-	sudo cp /opt/megapov/etc/megapov/1.2.1/povray.ini ~/.megapov/1.2.1/povray.ini
-	sudo cp /opt/megapov/etc/megapov/1.2.1/povray.conf ~/.megapov/1.2.1/povray.conf
-
-
-
-### compiling lpov_motionfield2
-
-	cd vlpovutils-master
-	sudo apt-get install libboost-dev libboost-test-dev
-	sed -i 's/CXXFLAGS=/CXXFLAGS= -std=c++11 /g' Makefile	
-	make
-	sudo cp vlpov_motionfield2 /usr/local/bin
-	sudo chmod  777 /usr/local/bin/motionfield2
-	sudo cp vlpov_project /usr/local/bin
-	sudo chmod  777 /usr/local/bin/vlpov_project
-
 
 
 ## testing 
