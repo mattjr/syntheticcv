@@ -34,9 +34,30 @@ right image:
 
 ![right image](images/image_right2.png)
 
-disparity: 
+left ground truth depth
+![left ground truth depth](images/left_depth.png)
 
-![right disparity](images/right_disparity.png)
+right ground truth depth
+![right ground truth depth](images/right_depth.png)
+
+
+right ground truth motion field
+![right ground truth motion field](images/motionfield_mx_right.png)
+
+left ground truth motion field
+![right ground truth motion field](images/motionfield_mx_left.png)
+
+left gocclusions
+![right gocclusions](images/occlusion_left.png)
+
+right gocclusions
+![right gocclusions](images/occlusion_right.png)
+
+
+
+left disparity obtain from the pair of image and Semi global Patch matching from OpenCV: 
+
+![left disparity](images/left_disparity.png)
 
 
 
@@ -71,12 +92,15 @@ in a terminal go in the folder than contains the script install.sh and run it by
 	
 	./install.sh
 
-after running the script you should have the four executables
+after running the script you should have the three executables
 
-	/usr/local/bin/povray
+
 	/usr/local/bin/megapov
 	/usr/local/bin/motionfield2
 	/usr/local/bin/vlpov_project
+
+and a symbolic link 
+	/usr/local/bin/povray
 
 
 
