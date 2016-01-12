@@ -34,23 +34,29 @@ right image:
 
 ![right image](images/image_right2.png)
 
-left ground truth depth
+left ground truth depth:
+
 ![left ground truth depth](images/left_depth.png)
 
-right ground truth depth
+right ground truth depth:
+
 ![right ground truth depth](images/right_depth.png)
 
 
-right ground truth motion field
+right ground truth motion field:
+
 ![right ground truth motion field](images/motionfield_mx_right.png)
 
-left ground truth motion field
+left ground truth motion field:
+
 ![right ground truth motion field](images/motionfield_mx_left.png)
 
-left gocclusions
+left gocclusions:
+
 ![right gocclusions](images/occlusion_left.png)
 
-right gocclusions
+right gocclusions:
+
 ![right gocclusions](images/occlusion_right.png)
 
 
