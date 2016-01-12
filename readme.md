@@ -68,9 +68,11 @@ but there is no texture for now...
 ## linux (tested on ubuntu)
 
 in a terminal go in the folder than contains the script install.sh and run it by typing 
+	
 	./install.sh
 
 after running the script you should have the four executables
+
 	/usr/local/bin/povray
 	/usr/local/bin/megapov
 	/usr/local/bin/motionfield2
