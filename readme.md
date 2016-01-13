@@ -24,16 +24,20 @@ synthetic stereo pairs
 
 
 |  left image | right image  |
+| ----| ---- |
 |  ![left image](images/image_left2.png)  | ![right image](images/image_right2.png)  |
 
 |  left ground truth depth  | right ground truth depth  |
+| ----| ---- |
 |  ![left ground truth depth](images/left_depth.png)  | ![right ground truth depth](images/right_depth.png)  |
 
 |  right ground truth motion field  | left ground truth motion field  |
+| ----| ---- |
 |  ![right ground truth motion field](images/motionfield_mx_right.png) | ![right ground truth motion field](images/motionfield_mx_left.png)  |
 
 
 |  left occlusions  | right occlusionsd  |
+| ----| ---- |
 | ![right occlusions](images/occlusion_left.png) | ![right occlusions](images/occlusion_right.png)  |
 
 
