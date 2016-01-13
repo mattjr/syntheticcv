@@ -86,7 +86,7 @@ the paper describing the image generation process can be found [here](http://www
 it has been generated wit POVray http://www.povray.org/
 improved version of thes synthetic data with additional what can be found [here](http://redwood-data.org/indoor/dataset.html)
 explaination on how to create a camera paramterized as usually done in computer vision in povray in [here](http://www.inf.u-szeged.hu/projectdirs/kepaf2011/pdfs/S07_02.pdf)
-gettign data from http://robotvault.bitbucket.org/
+getting data from http://robotvault.bitbucket.org/
 but there is no texture for now...
 
 # Install
@@ -126,16 +126,16 @@ it will create the images show in the examples above
 
 # some models available online
 
-we could enrich our synthetic scene using existing 3D models
+we could enrich our synthetic scenes using existing 3D models
 
 archive3D.net archibase.co
 
-website listing most webstite with a short descritpion :
+website listing most websites that offer 3D models with a short description :
 	http://en.wikibooks.org/wiki/Blender_3D:_Noob_to_Pro/Sources_of_free_3D_models
 
 
 http://www.blender-models.com/
-	not many model in total (392items), and very few interesting for us
+	not many models in total (392items), and very few interesting for us
 
 http://blender-archi.tuxfamily.org/Models#Chair
 	quite a few furniture models, no scenes
@@ -144,13 +144,13 @@ http://archive3d.net/
 	many furniture models , not blender files  no scenes
 
 http://www.blendswap.com/blends/view/67359
-	many scenes , can be filtrer by licens (CC-0 ,CC-By, CC-BY-SA) will look what these licences mean
+	many scenes , can be filtrer by licence (CC-0 ,CC-By, CC-BY-SA) will need to look what these licences mean
 	http://www.blendswap.com/search?term=kitchen		
 	www.blendswap.com/search?term=+room
 
 
 http://sketchup.google.com/3dwarehouse
-	quite a few kitchen and living rooms, not really reastic models in general
+	quite a few kitchen and living rooms, not really realistic models in general
 
 http://resources.blogscopia.com
  	license : Creative Commons 3.0 Unported ( http://resources.blogscopia.com/license-2/)	
