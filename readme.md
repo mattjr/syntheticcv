@@ -122,7 +122,7 @@ but there is no texture for now...
 
 ## using blender
 
-an alternative to using povray would be touse blender. 
+An alternative to using povray could be to use blender. 
 We could generate random scenes using a python script within python and then render pairs of stereo images using
 https://www.blender.org/manual/render/workflows/multiview.html.
 
@@ -132,9 +132,9 @@ http://wiki.blender.org/index.php/User:Dfelinto/Stereoscopy
 in order to get the depth images we could use
 http://www.cs.tut.fi/kurssit/SGN-5406/vrlab2012/blender-manual.pdf or maybe http://www.blensor.org
 
-how easy would it be to add distortion models to the camera ? 
+How easy would it be to add distortion models to the camera ? 
 
-the data set from the sintel animated movies available [here](http://sintel.is.tue.mpg.de/) has been obtained using a modified version of blender. Could we reuse their scripts and code with our randomly generated scenes ? 
+The data set from the sintel animated movies available [here](http://sintel.is.tue.mpg.de/) has been obtained using a modified version of blender. Could we reuse their scripts and code with our randomly generated scenes ? 
 The paper [here](http://files.is.tue.mpg.de/black/papers/WulffECCVws2012.pdf) describes the methodology and modications than have been done to blender to generate the data, but it seems that the code has not been made publicly available.
 
 
