@@ -149,8 +149,8 @@ thhe paper [here](http://files.is.tue.mpg.de/black/papers/WulffECCVws2012.pdf) d
 * why using random scenes instead of sintel scene (http://sintel.is.tue.mpg.de/stereo)? 
 	the sintel movie contains many curvy object and might not be suited to train or test methods that work for man made objects with piecwise planar surfaces like urban scenes. The dataset is also limited , while we can generate un unlimited amount of data. Using our own random scene, we have a better control on the scene properties, we can control the amount of texture, specularities etc. This comes at the cost of having scene that may not have stastics that are similar to natural images.
 
-* wy not using blender scripts ?
-	that coudl be a good alternative (see section above about blender)
+* why not using a blender scripts ?
+	that coudl be a good alternative (see section above about blender) using python scripts inside blender, but we may need to  modify blender's C++ source code ti implement some of the aimed functionalities
 
 
 
