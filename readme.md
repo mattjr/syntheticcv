@@ -81,10 +81,17 @@ This has the advantage of beeing more flexible that using a pached version of po
 
 # References and links
 
-synthetic office and living room images + depth [here](http://www.doc.ic.ac.uk/~ahanda/VaFRIC/iclnuim.html)
+
+the code use to call from python the generation of the depth map using the patched version of megapov as been inspired from
+following the example from [here](http://devernay.free.fr/vision/focus/office/)
+ 
+There are synthetic office and living room images + depth [here](http://www.doc.ic.ac.uk/~ahanda/VaFRIC/iclnuim.html)
+
 the paper describing the image generation process can be found [here](http://www.doc.ic.ac.uk/~ahanda/VaFRIC/icra2014.pdf)
 it has been generated wit POVray http://www.povray.org/
+
 improved version of thes synthetic data with additional what can be found [here](http://redwood-data.org/indoor/dataset.html)
+
 explaination on how to create a camera paramterized as usually done in computer vision in povray in [here](http://www.inf.u-szeged.hu/projectdirs/kepaf2011/pdfs/S07_02.pdf)
 getting data from http://robotvault.bitbucket.org/
 but there is no texture for now...
