@@ -134,22 +134,20 @@ http://www.cs.tut.fi/kurssit/SGN-5406/vrlab2012/blender-manual.pdf or maybe http
 
 how easy would it be to add distortion models to the camera ? 
 
-the data from the sintel animated movies have been obtained using a modified version of blender
-https://www.blender.org/conference/2013/presentations/40
-could we reuse these script with ou randomly generated scenes ? 
-thhe paper [here](http://files.is.tue.mpg.de/black/papers/WulffECCVws2012.pdf) describrs the methodology and modicatiokn than have been done to blender to generate the data, but it seems that the code has not been made publicly available.
+the data set from the sintel animated movies available [here](http://sintel.is.tue.mpg.de/) has been obtained using a modified version of blender. Could we reuse their scripts and code with our randomly generated scenes ? 
+The paper [here](http://files.is.tue.mpg.de/black/papers/WulffECCVws2012.pdf) describes the methodology and modications than have been done to blender to generate the data, but it seems that the code has not been made publicly available.
 
 
 ## using maya 
 
- the code used to generate syntethid optical flow data used in the paper *Learning a Confidence Measure for Optical Flow* Mac Aodha, O., Humayun, A., Pollefeys, M., Brostow, G.J. PAMI 2012 is available [here](http://visual.cs.ucl.ac.uk/pubs/flowConfidence/GetFlowv1.2.zip)
+ The code used to generate synthethic optical flow data used in the paper *Learning a Confidence Measure for Optical Flow* Mac Aodha, O., Humayun, A., Pollefeys, M., Brostow, G.J. PAMI 2012 is available [here](http://visual.cs.ucl.ac.uk/pubs/flowConfidence/GetFlowv1.2.zip)
 
 # Questions
 
-* why using random scenes instead of sintel scene (http://sintel.is.tue.mpg.de/stereo)? 
+* Why using random scenes instead of sintel scene (http://sintel.is.tue.mpg.de/stereo)? 
 	the sintel movie contains many curvy object and might not be suited to train or test methods that work for man made objects with piecwise planar surfaces like urban scenes. The dataset is also limited , while we can generate un unlimited amount of data. Using our own random scene, we have a better control on the scene properties, we can control the amount of texture, specularities etc. This comes at the cost of having scene that may not have stastics that are similar to natural images.
 
-* why not using a blender scripts ?
+* Why not using a blender scripts ?
 	that coudl be a good alternative (see section above about blender) using python scripts inside blender, but we may need to  modify blender's C++ source code ti implement some of the aimed functionalities
 
 
