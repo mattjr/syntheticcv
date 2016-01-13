@@ -36,7 +36,7 @@ synthetic stereo pairs
 |  ![right ground truth motion field](images/motionfield_mx_left.png)  | ![right ground truth motion field](images/motionfield_mx_right.png) |
 
 
-|  left occlusions  | right occlusionsd  |
+|  left occlusions  | right occlusions  |
 | ----| ---- |
 | ![right occlusions](images/occlusion_left.png) | ![right occlusions](images/occlusion_right.png)  |
 
@@ -93,6 +93,8 @@ it will create the images show in the examples above
 
 #TODO
 
+* check that the ground truth dispary maps  are correct
+
 * modify vapory or add a layer to use the patched megapov executable (or use the symbolic link trick discussed above) and add the code to read the depth map, disparity maps and occlusion map (read_depth/py) to the vapory code, to make a nice python interface. We need to add a local copy of vapory to the code to do that.
 
 
@@ -117,6 +119,41 @@ improved version of thes synthetic data with additional what can be found [here]
 explaination on how to create a camera paramterized as usually done in computer vision in povray in [here](http://www.inf.u-szeged.hu/projectdirs/kepaf2011/pdfs/S07_02.pdf)
 getting data from http://robotvault.bitbucket.org/
 but there is no texture for now...
+
+## using blender
+
+an alternative to using povray would be touse blender. 
+We could generate random scenes using a python script within python and then render pairs of stereo images using
+https://www.blender.org/manual/render/workflows/multiview.html.
+
+Could the whole process be scripted such that it can be launch by a single press button ? could it be run from the command line or does it have to be launched manually from within blender ? 
+have a look at https://www.blender.org/manual/game_engine/camera/stereo.html and
+http://wiki.blender.org/index.php/User:Dfelinto/Stereoscopy
+in order to get the depth images we could use
+http://www.cs.tut.fi/kurssit/SGN-5406/vrlab2012/blender-manual.pdf or maybe http://www.blensor.org
+
+how easy would it be to add distortion models to the camera ? 
+
+the data from the sintel animated movies have been obtained using a modified version of blender
+https://www.blender.org/conference/2013/presentations/40
+could we reuse these script with ou randomly generated scenes ? 
+thhe paper [here](http://files.is.tue.mpg.de/black/papers/WulffECCVws2012.pdf) describrs the methodology and modicatiokn than have been done to blender to generate the data, but it seems that the code has not been made publicly available.
+
+
+## using maya 
+
+ the code used to generate syntethid optical flow data used in the paper *Learning a Confidence Measure for Optical Flow* Mac Aodha, O., Humayun, A., Pollefeys, M., Brostow, G.J. PAMI 2012 is available [here](http://visual.cs.ucl.ac.uk/pubs/flowConfidence/GetFlowv1.2.zip)
+
+# Questions
+
+* why using random scenes instead of sintel scene (http://sintel.is.tue.mpg.de/stereo)? 
+	the sintel movie contains many curvy object and might not be suited to train or test methods that work for man made objects with piecwise planar surfaces like urban scenes. The dataset is also limited , while we can generate un unlimited amount of data. Using our own random scene, we have a better control on the scene properties, we can control the amount of texture, specularities etc. This comes at the cost of having scene that may not have stastics that are similar to natural images.
+
+* wy not using blender scripts ?
+	that coudl be a good alternative (see section above about blender)
+
+
+
 
 ## some models available online
 

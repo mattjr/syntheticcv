@@ -12,7 +12,7 @@ class AmbientLight(vapory.POVRayElement):
         return 'ambient_light rgb <%d,%d,%d>'%(self.color[0], self.color[1],self.color[2])       
 
 
-def compute_depth(scene,width,height,tempfilename='__tmp__'):
+def compute_image_and_depth(scene,width,height,tempfilename='__tmp__'):
     pov_file = tempfilename+'.pov'
     
     strscene=str(scene)
@@ -89,13 +89,13 @@ def generateStereoPair(scene_left,scene_right,useRadiosity):
     # geting the depth , this should be moved inside vapory ? 
     basefile1='__tmpleft__'
     basefile2='__tmpright__'
-    depth3=compute_depth(scene_left,width=300, height=200,tempfilename=basefile1)
+    depth3=compute_image_and_depth(scene_left,width=300, height=200,tempfilename=basefile1)
     maxdepth=np.max(depth3[depth3<10000000])
     depth4=np.minimum(depth3,maxdepth )
     plt.ion()
     imsave('left_depth.png',-depth4)
     
-    depth3=compute_depth(scene_right,width=300, height=200,tempfilename=basefile2)
+    depth3=compute_image_and_depth(scene_right,width=300, height=200,tempfilename=basefile2)
     maxdepth=np.max(depth3[depth3<10000000])
     depth4=np.minimum(depth3,maxdepth )
     plt.ion()
