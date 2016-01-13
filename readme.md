@@ -1,6 +1,6 @@
 # Project's goals
 
-The goal of this project is to provide an easy-to-install python toolbox that can be used to easily generate synthetic training and testing data for various computer-vision problems such as stereo reconstruction, optical flow, multiview reconstruction, structure from motion, point and segment matching, single view surface normals estimation or shape from shading.
+The goal of this project is to provide an easy-to-install python toolbox that can be used to easily generate synthetic training and testing data for various computer-vision problems such as stereo reconstruction, optical flow, multiview reconstruction, structure from motion, point and segment matching, single view surface normals estimation or shape from shading. For now only rigid scene are handled.
 
 The synthetic images are obtained through the generation of a random 3D scene that is rendered using the open-source ray-tracer called povray trough a simple python interface to povray called [vapory](https://github.com/Zulko/vapory).
 The povray ray tracer is patched using [vlpovutils](https://github.com/devernay/vlpovutils) in order to allow the obtention of the disparity map in case of stereo pairs generation. 
@@ -17,6 +17,11 @@ Generating synthetic data allows us
 ## Examples
 
 synthetic stereo pairs
+
+|   |   |   |   |   |
+|---|---|---|---|---|
+|   |   |   |   |   |
+|   |   |   |   |   |
  
 left image:
 
@@ -79,22 +84,7 @@ This has the advantage of beeing more flexible that using a pached version of po
 
 
 
-# References and links
 
-
-the code use to call from python the generation of the depth map using the patched version of megapov as been inspired from
-following the example from [here](http://devernay.free.fr/vision/focus/office/)
- 
-There are synthetic office and living room images + depth [here](http://www.doc.ic.ac.uk/~ahanda/VaFRIC/iclnuim.html)
-
-the paper describing the image generation process can be found [here](http://www.doc.ic.ac.uk/~ahanda/VaFRIC/icra2014.pdf)
-it has been generated wit POVray http://www.povray.org/
-
-improved version of thes synthetic data with additional what can be found [here](http://redwood-data.org/indoor/dataset.html)
-
-explaination on how to create a camera paramterized as usually done in computer vision in povray in [here](http://www.inf.u-szeged.hu/projectdirs/kepaf2011/pdfs/S07_02.pdf)
-getting data from http://robotvault.bitbucket.org/
-but there is no texture for now...
 
 # Install
 
@@ -130,8 +120,29 @@ it will create the images show in the examples above
 * modify vapory or add a layer to use the patched megapov executable (or use the symbolic link trick discussed above) and add the code to read the depth map, disparity maps and occlusion map (read_depth/py) to the vapory code, to make a nice python interface. We need to add a local copy of vapory to the code to do that.
 
 
+* give a better control of the camera paramters, uncluding the focal. Maybe allows to add distortions in the camera? there are already some non conventional camera models in povray [see here](http://www.povray.org/documentation/view/3.6.1/247/)
 
-# some models available online
+* obtain motion field for non rigid scene. It might be quite difficult to do.
+
+# References and links
+
+## synthetic scene rendering
+
+the code use to call from python the generation of the depth map using the patched version of megapov as been inspired from
+following the example from [here](http://devernay.free.fr/vision/focus/office/)
+ 
+There are synthetic office and living room images + depth [here](http://www.doc.ic.ac.uk/~ahanda/VaFRIC/iclnuim.html)
+
+the paper describing the image generation process can be found [here](http://www.doc.ic.ac.uk/~ahanda/VaFRIC/icra2014.pdf)
+it has been generated wit POVray http://www.povray.org/
+
+improved version of thes synthetic data with additional what can be found [here](http://redwood-data.org/indoor/dataset.html)
+
+explaination on how to create a camera paramterized as usually done in computer vision in povray in [here](http://www.inf.u-szeged.hu/projectdirs/kepaf2011/pdfs/S07_02.pdf)
+getting data from http://robotvault.bitbucket.org/
+but there is no texture for now...
+
+## some models available online
 
 we could enrich our synthetic scenes using existing 3D models
 
