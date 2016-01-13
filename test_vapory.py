@@ -21,9 +21,9 @@ def compute_depth(scene,width,height,tempfilename='__tmp__'):
     with open(pov_file, 'w+') as f:
         f.write(strscene)    
 
-    cmd='megapov +Q9 -UV +w%d +h%d -A +L.  +K0.0 %s +O%s.png'%(width,height,pov_file,tempfilename)
-    print subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE).stdout.read()
 
+    cmd='megapov +FN16 +Q9 -UV +w%d +h%d +A0.01 +L.  +K0.0 %s +O%s.png'%(width,height,pov_file,tempfilename)
+    print subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE).stdout.read()
 
     depth=np.fromfile(tempfilename+'.depth',dtype=np.float)
     depth2=depth.byteswap()# the data is save in the little indian forma tin the file

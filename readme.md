@@ -112,95 +112,17 @@ and a symbolic link
 
 ## testing 
 
+run the python script test_vapory.py:
 
+	python test_vapory.py
 
-following the example from [here](http://devernay.free.fr/vision/focus/office/) i'm trying to generate a stereo pair with the corresponding disparity map
-we first fetch the data and create folder
-
-	mkdir data
-	cd data
-	mkdir office
-	cd office
-	wget http://devernay.free.fr/vision/focus/office/office-focalblur.zip
-	unzip -a office-focalblur.zip
-	cd office-focalblur
-	wget  http://www.ignorancia.org/uploads/zips/office.zip
-	unzip -a office.zip
-	wget  http://www.ignorancia.org/uploads/zips/lightsys4c.zip
-	unzip -a lightsys4c.zip
-	wget http://www.ignorancia.org/uploads/zips/bookplacer.zip
-	unzip -a bookplacer.zip
-	wget http://www.ignorancia.org/uploads/zips/meshlath.zip
-	unzip -a meshlath.zip	
-	mkdir office-left office-right
-	
-we render the scene with very low quality in order to quickly get the depth information
-
-	megapov +Q0 -UV +w320 +h240 -A +L. +L./office +L./office/maps +L./LightsysIV +L./office-left +K0.0 +Ioffice_stereo_megapov.pov +Ooffice_stereo1_megapov.png
-	megapov +Q0 -UV +w320 +h240 -A +L. +L./office +L./office/maps +L./LightsysIV +L./office-right +K1.0 +Ioffice_stereo_megapov.pov +Ooffice_stereo2_megapov.png
-
-	
-
-this should have create 3 files in each subfolder office-left: office_stereo1_megapov.png,office_stereo1_megapov.txt,office_stereo1_megapov.depth
-and three similar files in office-right. I you don't have te txt and depth files generated you may not be calling the patched megapov version (using megapov-annotation-0.2.patch see above).
-The depth file containe the distances to the camera for each pixel in a little indian floatting point format. You can visualize the depth map using read_depth.py
-
-![left depth image](images/depth_left.png) 
-
-
-we can now get the occlusion masks 
-
-	vlpov_motionfield2 office-left/office_stereo1_megapov office-right/office_stereo2_megapov
-
-this creates 3 files 	office_stereo1_megapov.office_stereo2_megapov.occ.tif (occlusion mask), office_stereo1_megapov.office_stereo2_megapov.my.tif (disparity map in direction y, it should be all zeros but i get values of about 0.00001) and office_stereo1_megapov.office_stereo2_megapov.mx.tif (disparity map in direction x ? )
-the motion field images are 32bit floating point tif files which cannot be visualize in the default ubuntu image viewer, however you can read ans export them to png images using read_depth.py
-
-occlusion map:
-![occlusion](images/occlusion.png)
-
-disparity my:
-![otion field my](images/motionfield_my.png)
-
-disparity mx:
-![motion field mx](images/motionfield_mx.png)
-
-getting the disparity maps
-	
-	(echo -100 110 -20; echo 65 289 165) | vlpov_project office-left/office_stereo1_megapov office-right/office_stereo2_megapov
-
-this seems to only print the following information, without file beeing created. Is that information combined with thr motion field enought to create the disparity maps ? 
-	159.373 275.731 534.022 0.25369 -1.16108e-05
-	161.238 275.731 267.011 -3.47487 1.63918e-06
-
-
-We can also render the image with better qualities and different focus zones
-
-	megapov +FN16 +Q9 -UV +w320 +h240 -A +L. +L./office +L./office/maps +L./LightsysIV +L./office-left +K0.0 +Ioffice_stereo_far.pov +Ooffice_stereo1_far.png
-	megapov +FN16 +Q9 -UV +w320 +h240 -A +L. +L./office +L./office/maps +L./LightsysIV +L./office-left +K0.0 +Ioffice_stereo_near.pov +Ooffice_stereo1_near.png
-	megapov +FN16 +Q9 -UV +w320 +h240 -A +L. +L./office +L./office/maps +L./LightsysIV +L./office-left +K0.0 +Ioffice_stereo_near2.pov +Ooffice_stereo1_near2.png
-	megapov +FN16 +Q9 -UV +w320 +h240 -A +L. +L./office +L./office/maps +L./LightsysIV +L./office-left +K0.0 +Ioffice_stereo_far2.pov +Ooffice_stereo1_far2.png
-	megapov +FN16 +Q9 -UV +w320 +h240 +A0.0 +J0.0 -A +L. +L./office +L./office/maps +L./LightsysIV +L./office-left +K0.0 +Ioffice_stereo.pov +Ooffice_stereo1_all.png
-	megapov +FN16 +Q9 -UV +w320 +h240 +L. +L./office +L./office/maps +L./LightsysIV +L./office-right +K1.0 +Ioffice_stereo_far.pov +Ooffice_stereo2_far.png
-	megapov +FN16 +Q9 -UV +w320 +h240 +L. +L./office +L./office/maps +L./LightsysIV +L./office-right +K1.0 +Ioffice_stereo_near.pov +Ooffice_stereo2_near.png
-	megapov +FN16 +Q9 -UV +w320 +h240 +L. +L./office +L./office/maps +L./LightsysIV +L./office-right +K1.0 +Ioffice_stereo_near2.pov +Ooffice_stereo2_near2.png
-	megapov +FN16 +Q9 -UV +w320 +h240 +L. +L./office +L./office/maps +L./LightsysIV +L./office-right +K1.0 +Ioffice_stereo_far2.pov +Ooffice_stereo2_far2.png
-	megapov +FN16 +Q9 -UV +w320 +h240 +A0.0 +J0.0 +L. +L./office +L./office/maps +L./LightsysIV +L./office-right +K1.0 +Ioffice_stereo.pov +Ooffice_stereo2_all.png
-
-
-the rendering at this level of quality is very long to run, about an hour for one image, despite the small resolution.
-I have the impression that is is much slower that the precompiled version of povray 3.7 , is it so ? 
-
-megapov +FN16 +Q0 -UV +w320 +h240 -A +L. +L./office +L./office/maps +L./LightsysIV +L./office-left +K0.0 +Ioffice_stereo_far.pov +Ooffice_stereo1_far.png
-megapov  +Q0 -UV +w320 +h240 -A +L. +L./office +L./office/maps +L./LightsysIV +L./office-left +K0.0 +Ioffice_stereo_far.pov +Ooffice_stereo1_far.png
-
+it will create the images show in the examples above
 
 #TODO
 
-* modify vapory to use the patched megapov executable (or use the symbolic link trick discussed above) and add the code to read the depth map, disparity maps and occlusion map (read_depth/py) to the vapory code, to make a nice python interface. We need to add a local copy of vapory to the code to do that.
+* modify vapory or add a layer to use the patched megapov executable (or use the symbolic link trick discussed above) and add the code to read the depth map, disparity maps and occlusion map (read_depth/py) to the vapory code, to make a nice python interface. We need to add a local copy of vapory to the code to do that.
 
-* make a script to make the full installation process easier using pip install. 
 
-* maybe add the code of vapory, megapov and vlpovutils to the repository to make the installation easier ? 
 
 # some models available online
 
