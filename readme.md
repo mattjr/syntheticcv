@@ -51,13 +51,13 @@ left ground truth motion field:
 
 ![right ground truth motion field](images/motionfield_mx_left.png)
 
-left gocclusions:
+left occlusions:
 
-![right gocclusions](images/occlusion_left.png)
+![right occlusions](images/occlusion_left.png)
 
-right gocclusions:
+right occlusions:
 
-![right gocclusions](images/occlusion_right.png)
+![right occlusions](images/occlusion_right.png)
 
 
 
