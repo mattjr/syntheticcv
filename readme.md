@@ -18,18 +18,18 @@ Generating synthetic data allows us
 
 synthetic stereo pairs
 
-|   |   |   |   |   |
-|---|---|---|---|---|
-|   |   |   |   |   |
-|   |   |   |   |   |
+|  left image | right image  |
+|---|---|
+|  ![left image](images/image_left.png)  | ![right image](images/image_right.png)  |
+|   |   |
  
-left image:
 
-![left image](images/image_left.png) 
+
+
  
 right image:
 
-![right image](images/image_right.png)
+
 
 left image:
 
