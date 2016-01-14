@@ -4,9 +4,11 @@ import numpy as np
 from scipy.misc import imsave,imread
 import subprocess
 import os
+import shutil
 
 tempfolder='./tmp'
-os.mkdir(tempfolder)
+if not  os.path.isdir(tempfolder):
+    os.mkdir(tempfolder)
 
 class AmbientLight(vapory.POVRayElement):
     def __init__(self,color):
@@ -25,9 +27,9 @@ def compute_image_and_depth(scene,width,height,tempfilename='__tmp__'):
         f.write(strscene)    
 
 
-    cmd='megapov +FN16 +Q9 -UV +w%d +h%d +A0.01 +L.  +K0.0 %s +O%s.png'%(width,height,pov_file,os.path.join(tempfolder,tempfilename))
+    cmd='./megapov +FN16 +Q9 -UV +w%d +h%d +A0.01 +L.  +K0.0 %s +O%s.png'%(width,height,pov_file,os.path.join(tempfolder,tempfilename))
     print subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE).stdout.read()
-
+    shutil.move(tempfilename+'.depth', os.path.join(tempfolder,tempfilename)+'.depth')# strange that megapov put the file locally
     depth=np.fromfile(os.path.join(tempfolder,tempfilename)+'.depth',dtype=np.float)
     depth2=depth.byteswap()# the data is save in the little indian forma tin the file
     depth3=depth2.reshape((height,width)) 
@@ -35,24 +37,24 @@ def compute_image_and_depth(scene,width,height,tempfilename='__tmp__'):
 
 def compute_occlusion_and_disparities(basefile1,basefile2):
     
-    cmd='vlpov_motionfield2 %s %s'%(os.path.join(tempfolder,basefile1),os.path.join(tempfolder,basefile2))
+    cmd='./vlpov_motionfield2 %s %s'%(os.path.join(tempfolder,basefile1),os.path.join(tempfolder,basefile2))
     print subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE).stdout.read()
         
-    file_occ=basefile1+'.'+basefile2+'.occ.tif'
+    file_occ=os.path.join(tempfolder,basefile1+'.'+basefile2+'.occ.tif')
     occ=imread(file_occ)
     imsave(os.path.join(tempfolder,'occlusion_left.png'), occ)
     
-    file_occ=basefile2+'.'+basefile1+'.occ.tif'
+    file_occ=os.path.join(tempfolder,basefile2+'.'+basefile1+'.occ.tif')
     occ=imread(file_occ)
     imsave(os.path.join(tempfolder,'occlusion_right.png'), occ)    
     
-    file_mx=basefile1+'.'+basefile2+'.mx.tif'
+    file_mx=os.path.join(tempfolder,basefile1+'.'+basefile2+'.mx.tif')
     plt.subplot(1,2,1)
     mx=imread(file_mx)
     plt.imshow(mx)
-    imsave('motionfield_mx_left.png', mx)
+    imsave(os.path.join(tempfolder,'motionfield_mx_left.png'), mx)
     
-    file_my=basefile2+'.'+basefile1+'.mx.tif'
+    file_my=os.path.join(tempfolder,basefile2+'.'+basefile1+'.mx.tif')
     plt.subplot(1,2,1)
     mx=imread(file_my)
     plt.imshow(mx)

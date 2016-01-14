@@ -71,17 +71,6 @@ in a terminal go in the folder than contains the script install.sh and run it by
 	
 	./install.sh
 
-after running the script you should have the three executables
-
-
-	/usr/local/bin/megapov
-	/usr/local/bin/motionfield2
-	/usr/local/bin/vlpov_project
-
-and a symbolic link 
-	/usr/local/bin/povray
-
-
 
 ## testing 
 
