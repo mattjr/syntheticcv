@@ -118,6 +118,9 @@ improved version of thes synthetic data with additional what can be found [here]
 
 explaination on how to create a camera paramterized as usually done in computer vision in povray in [here](http://www.inf.u-szeged.hu/projectdirs/kepaf2011/pdfs/S07_02.pdf) [1], but there is not code available online.
 
+there a a similar project to generate synthetic scenes seen from a car [project page](http://campar.in.tum.de/Chair/ProjectSyntheticDataset)
+[github page](https://github.com/haltakov/synthetic-dataset)
+[3] 
 
  
 ## using blender
@@ -197,5 +200,9 @@ http://resources.blogscopia.com
 ## references
 
 [1] *High-precision Ground-truth Data for Evaluating Dense Stereo and Optical Flow Algorithms* by Andras Bodis-Szomoru, Tamas Daboczi. 8th Conference of the Hungarian Association for Image Processing and Pattern Recognition (KÉPAF'2011)
+
 [2] *Lessons and Insights from Creating a Synthetic Optical Flow Benchmark* JonasWulff, Daniel J Butler, Garrett B Stanley,  Michael J Black
+
+[3] *Framework for generation of synthetic ground truth data for driver assistance applications* Vladimir Haltakov, 
+Christian Unger, Slobodan Ilic 
 
