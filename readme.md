@@ -159,23 +159,32 @@ The paper [2] describes the methodology and modications than have been done to b
 ## some models available online
 
 If we want to generate interior scenes we could enrich our synthetic scenes using existing 3D models
+
 * archive3D.net archibase.co
+
 * http://www.blender-models.com/ (not many models in total )
+
 * http://blender-archi.tuxfamily.org/Models#Chair
+
 * http://archive3d.net/ (many furniture models , not blender files  no scenes)
+
 * http://www.blendswap.com/blends/view/67359
 	many scenes , can be filtrer by licence (CC-0 ,CC-By, CC-BY-SA) will need to look what these licences mean
 	http://www.blendswap.com/search?term=kitchen		
 	www.blendswap.com/search?term=+room
+
 *  http://robotvault.bitbucket.org/ (complete indoor scens , but there is no texture for now)
+
 * http://sketchup.google.com/3dwarehouse
 	quite a few kitchen and living rooms, not really realistic models in general
+
 * http://resources.blogscopia.com
  	license : Creative Commons 3.0 Unported ( http://resources.blogscopia.com/license-2/)	
 	furnitures but not complete scenes
 	exemple
 	contemp_living_room_sh3d.zip
 	contemp_living_room_obj.zip
+
 *	http://en.wikibooks.org/wiki/Blender_3D:_Noob_to_Pro/Sources_of_free_3D_models (website listing most websites that offer 3D models with a short description :)
 
 
