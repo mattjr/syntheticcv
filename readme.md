@@ -116,11 +116,9 @@ it has been generated wit POVray http://www.povray.org/
 
 improved version of thes synthetic data with additional what can be found [here](http://redwood-data.org/indoor/dataset.html)
 
-explaination on how to create a camera paramterized as usually done in computer vision in povray in [here](http://www.inf.u-szeged.hu/projectdirs/kepaf2011/pdfs/S07_02.pdf) [1], but there is not code available online.
+explaination on how to create a camera paramterized as usually done in computer vision in povray in [1], but there is not code available online.
 
-there a a similar project to generate synthetic scenes seen from a car [project page](http://campar.in.tum.de/Chair/ProjectSyntheticDataset)
-[github page](https://github.com/haltakov/synthetic-dataset)
-[3] 
+there a a similar project to generate synthetic scenes seen from a car [3] 
 
  
 ## using blender
@@ -137,13 +135,13 @@ http://www.cs.tut.fi/kurssit/SGN-5406/vrlab2012/blender-manual.pdf or maybe http
 
 How easy would it be to add distortion models to the camera ? 
 
-The data set from the sintel animated movies available [here](http://sintel.is.tue.mpg.de/) has been obtained using a modified version of blender. Could we reuse their scripts and code with our randomly generated scenes ? 
-The paper [here](http://files.is.tue.mpg.de/black/papers/WulffECCVws2012.pdf)[2] describes the methodology and modications than have been done to blender to generate the data, but it seems that the code has not been made publicly available.
+The data set from the sintel animated movies available [2] has been obtained using a modified version of blender. Could we reuse their scripts and code with our randomly generated scenes ? 
+The paper [2] describes the methodology and modications than have been done to blender to generate the data, but it seems that the code has not been made publicly available.
 
 
 ## using maya 
 
- The code used to generate synthethic optical flow data used in the paper *Learning a Confidence Measure for Optical Flow* Mac Aodha, O., Humayun, A., Pollefeys, M., Brostow, G.J. PAMI 2012 is available [here](http://visual.cs.ucl.ac.uk/pubs/flowConfidence/GetFlowv1.2.zip)
+ We coud use the code used to generate synthethic optical flow data used in the paper [4]
 
 # Questions
 
@@ -200,9 +198,15 @@ http://resources.blogscopia.com
 ## references
 
 [1] *High-precision Ground-truth Data for Evaluating Dense Stereo and Optical Flow Algorithms* by Andras Bodis-Szomoru, Tamas Daboczi. 8th Conference of the Hungarian Association for Image Processing and Pattern Recognition (KÉPAF'2011)
+[paper](http://www.inf.u-szeged.hu/projectdirs/kepaf2011/pdfs/S07_02.pdf)
 
-[2] *Lessons and Insights from Creating a Synthetic Optical Flow Benchmark* JonasWulff, Daniel J Butler, Garrett B Stanley,  Michael J Black
+[2] *Lessons and Insights from Creating a Synthetic Optical Flow Benchmark* JonasWulff, Daniel J Butler, Garrett B Stanley,  Michael J Black. ECCV Workshop on Unsolved Problems in Optical Flow and Stereo Estimation, Springer-Verlag, Part II, LNCS 7584, pages 168-177, October 2012.
+ [paper](http://files.is.tue.mpg.de/black/papers/WulffECCVws2012.pdf) [dataset](http://sintel.is.tue.mpg.de/)
 
 [3] *Framework for generation of synthetic ground truth data for driver assistance applications* Vladimir Haltakov, 
-Christian Unger, Slobodan Ilic 
+Christian Unger, Slobodan Ilic. Pattern Recognition 2013 [project page](http://campar.in.tum.de/Chair/ProjectSyntheticDataset)
+[github page](https://github.com/haltakov/synthetic-dataset)
+
+[4] *Learning a Confidence Measure for Optical Flow* Mac Aodha, O., Humayun, A., Pollefeys, M., Brostow, G.J. PAMI 2012 [paper](https://www.inf.ethz.ch/personal/pomarc/pubs/MacAodhaPAMI12.pdf)[code](http://visual.cs.ucl.ac.uk/pubs/flowConfidence/GetFlowv1.2.zip)
+
 
