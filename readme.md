@@ -116,10 +116,17 @@ it will create the images shown in the examples above in a the tmp subfolder
 
 * modify vapory or add a layer to use the patched megapov executable (or use the symbolic link trick discussed above) and add the code to read the depth map, disparity maps and occlusion map (read_depth/py) to the vapory code, to make a nice python interface. We need to add a local copy of vapory to the code to do that.
 
-
-* give a better control of the camera paramters, uncluding the focal. Maybe allows to add distortions in the camera? there are already some non conventional camera models in povray [see here](http://www.povray.org/documentation/view/3.6.1/247/)
+* give a better control of the camera paramters using te classical conventions used in computer vision, uncluding the focal, position of the central point etc. Maybe allows to add distortions in the camera? there are already some non conventional camera models in povray [see here](http://www.povray.org/documentation/view/3.6.1/247/)
 
 * obtain motion field for non rigid scene. It might be quite difficult to do.
+
+* add code to evaluate the quality of stereo reconstruction algorithms that have been executed on the generated synthetic data (maybe usung some code from ipol or middleburry ?)
+
+* add code to evaluate the quality of multiview calibrations and reconstructions 
+
+* check that the rendering using the patvhed megapov executable is not slower than the original povray 3.7 (it seems slower to me)
+
+
 
 # References and links
 
