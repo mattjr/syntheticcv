@@ -3,7 +3,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.misc import imsave,imread
 import subprocess
+import os
 
+tempfolder='./tmp'
+os.mkdir(tempfolder)
 
 class AmbientLight(vapory.POVRayElement):
     def __init__(self,color):
@@ -13,7 +16,7 @@ class AmbientLight(vapory.POVRayElement):
 
 
 def compute_image_and_depth(scene,width,height,tempfilename='__tmp__'):
-    pov_file = tempfilename+'.pov'
+    pov_file = os.path.join(tempfolder,tempfilename+'.pov')
     
     strscene=str(scene)
     
@@ -22,26 +25,26 @@ def compute_image_and_depth(scene,width,height,tempfilename='__tmp__'):
         f.write(strscene)    
 
 
-    cmd='megapov +FN16 +Q9 -UV +w%d +h%d +A0.01 +L.  +K0.0 %s +O%s.png'%(width,height,pov_file,tempfilename)
+    cmd='megapov +FN16 +Q9 -UV +w%d +h%d +A0.01 +L.  +K0.0 %s +O%s.png'%(width,height,pov_file,os.path.join(tempfolder,tempfilename))
     print subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE).stdout.read()
 
-    depth=np.fromfile(tempfilename+'.depth',dtype=np.float)
+    depth=np.fromfile(os.path.join(tempfolder,tempfilename)+'.depth',dtype=np.float)
     depth2=depth.byteswap()# the data is save in the little indian forma tin the file
     depth3=depth2.reshape((height,width)) 
     return depth3
 
 def compute_occlusion_and_disparities(basefile1,basefile2):
     
-    cmd='vlpov_motionfield2 %s %s'%(basefile1,basefile2)
+    cmd='vlpov_motionfield2 %s %s'%(os.path.join(tempfolder,basefile1),os.path.join(tempfolder,basefile2))
     print subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE).stdout.read()
         
     file_occ=basefile1+'.'+basefile2+'.occ.tif'
     occ=imread(file_occ)
-    imsave('occlusion_left.png', occ)
+    imsave(os.path.join(tempfolder,'occlusion_left.png'), occ)
     
     file_occ=basefile2+'.'+basefile1+'.occ.tif'
     occ=imread(file_occ)
-    imsave('occlusion_right.png', occ)    
+    imsave(os.path.join(tempfolder,'occlusion_right.png'), occ)    
     
     file_mx=basefile1+'.'+basefile2+'.mx.tif'
     plt.subplot(1,2,1)
@@ -53,7 +56,7 @@ def compute_occlusion_and_disparities(basefile1,basefile2):
     plt.subplot(1,2,1)
     mx=imread(file_my)
     plt.imshow(mx)
-    imsave('motionfield_mx_right.png', mx)
+    imsave(os.path.join(tempfolder,'motionfield_mx_right.png'), mx)
 
 def generateStereoPair(scene_left,scene_right,useRadiosity):
     
@@ -93,20 +96,20 @@ def generateStereoPair(scene_left,scene_right,useRadiosity):
     maxdepth=np.max(depth3[depth3<10000000])
     depth4=np.minimum(depth3,maxdepth )
     plt.ion()
-    imsave('left_depth.png',-depth4)
+    imsave(os.path.join(tempfolder,'left_depth.png'),-depth4)
     
     depth3=compute_image_and_depth(scene_right,width=300, height=200,tempfilename=basefile2)
     maxdepth=np.max(depth3[depth3<10000000])
     depth4=np.minimum(depth3,maxdepth )
     plt.ion()
-    imsave('right_depth.png',-depth4)
+    imsave(os.path.join(tempfolder,'right_depth.png'),-depth4)
     
     plt.imshow(depth4)    
     
     
     compute_occlusion_and_disparities(basefile1,basefile2)
-    image_left=imread(basefile1+'.png')
-    image_right=imread(basefile2+'.png')
+    image_left=imread(os.path.join(tempfolder,basefile1+'.png'))
+    image_right=imread(os.path.join(tempfolder,basefile2+'.png'))
     # for some reason adding the line #include "pprocess.inc"\n PP_Init_Depth_Output()\n' 
     # at the begining of the povray file (.pov) to compute the depth seems to change the focal of the camera 
     
@@ -238,11 +241,11 @@ if __name__ == "__main__":
         
     d=disparityEvaluation(image_right,right_disparity) 
     plt.imshow(d['image_left2'])
-    imsave("image_left2.png",d['image_left2'])
+    imsave(os.path.join(tempfolder,"image_left2.png"),d['image_left2'])
     print "done"            
-    imsave('image_left2.png',image_left)
-    imsave('image_right2.png',image_right )
-    imsave('left_disparity.png',right_disparity )
+    imsave(os.path.join(tempfolder,'image_left2.png'),image_left)
+    imsave(os.path.join(tempfolder,'image_right2.png'),image_right )
+    imsave(os.path.join(tempfolder,'left_disparity.png'),right_disparity )
 
     plt.ion()
     plt.figure()

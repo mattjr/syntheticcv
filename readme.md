@@ -116,10 +116,10 @@ it has been generated wit POVray http://www.povray.org/
 
 improved version of thes synthetic data with additional what can be found [here](http://redwood-data.org/indoor/dataset.html)
 
-explaination on how to create a camera paramterized as usually done in computer vision in povray in [here](http://www.inf.u-szeged.hu/projectdirs/kepaf2011/pdfs/S07_02.pdf)
-getting data from http://robotvault.bitbucket.org/
-but there is no texture for now...
+explaination on how to create a camera paramterized as usually done in computer vision in povray in [here](http://www.inf.u-szeged.hu/projectdirs/kepaf2011/pdfs/S07_02.pdf) [1], but there is not code available online.
 
+
+ 
 ## using blender
 
 An alternative to using povray could be to use blender. 
@@ -135,7 +135,7 @@ http://www.cs.tut.fi/kurssit/SGN-5406/vrlab2012/blender-manual.pdf or maybe http
 How easy would it be to add distortion models to the camera ? 
 
 The data set from the sintel animated movies available [here](http://sintel.is.tue.mpg.de/) has been obtained using a modified version of blender. Could we reuse their scripts and code with our randomly generated scenes ? 
-The paper [here](http://files.is.tue.mpg.de/black/papers/WulffECCVws2012.pdf) describes the methodology and modications than have been done to blender to generate the data, but it seems that the code has not been made publicly available.
+The paper [here](http://files.is.tue.mpg.de/black/papers/WulffECCVws2012.pdf)[2] describes the methodology and modications than have been done to blender to generate the data, but it seems that the code has not been made publicly available.
 
 
 ## using maya 
@@ -154,6 +154,11 @@ The paper [here](http://files.is.tue.mpg.de/black/papers/WulffECCVws2012.pdf) de
 
 
 ## some models available online
+
+
+getting data from http://robotvault.bitbucket.org/
+but there is no texture for now...
+
 
 we could enrich our synthetic scenes using existing 3D models
 
@@ -187,4 +192,10 @@ http://resources.blogscopia.com
 	exemple
 	contemp_living_room_sh3d.zip
 	contemp_living_room_obj.zip
+
+
+## references
+
+[1] *High-precision Ground-truth Data for Evaluating Dense Stereo and Optical Flow Algorithms* by Andras Bodis-Szomoru, Tamas Daboczi. 8th Conference of the Hungarian Association for Image Processing and Pattern Recognition (KÉPAF'2011)
+[2] *Lessons and Insights from Creating a Synthetic Optical Flow Benchmark* JonasWulff, Daniel J Butler, Garrett B Stanley,  Michael J Black
 
