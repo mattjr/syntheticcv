@@ -76,6 +76,14 @@ run the installation script  by typing
 
 	sh install.sh
 
+you should get the executables
+	
+	./thirdparties/megapov/bin/povray
+	./thirdparties/megapov/bin/megapov
+	./thirdparties/megapov/bin/vlpov_motionfield2
+
+if you have trouble compiling povray for some png related function, you may want to use to check that the libpng version is 12 on the system. otherwise you can try to use libpbg15 with the patch from vlpovutils
+
 
 ## testing 
 
