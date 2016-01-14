@@ -147,54 +147,36 @@ The paper [2] describes the methodology and modications than have been done to b
 
 * Why using random scenes instead of sintel scene (http://sintel.is.tue.mpg.de/stereo)? 
 
-	the sintel movie contains many curvy object and might not be suited to train or test methods that work for man made objects with piecwise planar surfaces like urban scenes. The dataset is also limited , while we can generate un unlimited amount of data. Using our own random scene, we have a better control on the scene properties, we can control the amount of texture, specularities etc. This comes at the cost of having scene that may not have stastics that are similar to natural images.
+	the sintel movie contains many curvy object and might not be suited to train or test methods that work for man made objects with piecwise planar surfaces like urban scenes. The dataset is also limited. Our goal is not to provide a new dataset but opensource tools to create new ones. We can generate un unlimited amount of data. Using our own random scene, we have a better control on the scene properties, we can control the amount of texture, specularities etc. This comes at the cost of having scene that may not have stastics that are similar to natural images.
 
 * Why not using a blender scripts ?
 
-	that coudl be a good alternative (see section above about blender) using python scripts inside blender, but we may need to  modify blender's C++ source code ti implement some of the aimed functionalities
+	that coudl be a good alternative (see section above about blender) using python scripts inside blender, but we may need to  modify blender's C++ source code on order to implement some of the aimed functionalities asdone by [2]
 
 
 
 
 ## some models available online
 
-
-getting data from http://robotvault.bitbucket.org/
-but there is no texture for now...
-
-
-we could enrich our synthetic scenes using existing 3D models
-
-archive3D.net archibase.co
-
-website listing most websites that offer 3D models with a short description :
-	http://en.wikibooks.org/wiki/Blender_3D:_Noob_to_Pro/Sources_of_free_3D_models
-
-
-http://www.blender-models.com/
-	not many models in total (392items), and very few interesting for us
-
-http://blender-archi.tuxfamily.org/Models#Chair
-	quite a few furniture models, no scenes
-
-http://archive3d.net/
-	many furniture models , not blender files  no scenes
-
-http://www.blendswap.com/blends/view/67359
+If we want to generate interior scenes we could enrich our synthetic scenes using existing 3D models
+* archive3D.net archibase.co
+* http://www.blender-models.com/ (not many models in total )
+* http://blender-archi.tuxfamily.org/Models#Chair
+* http://archive3d.net/ (many furniture models , not blender files  no scenes)
+* http://www.blendswap.com/blends/view/67359
 	many scenes , can be filtrer by licence (CC-0 ,CC-By, CC-BY-SA) will need to look what these licences mean
 	http://www.blendswap.com/search?term=kitchen		
 	www.blendswap.com/search?term=+room
-
-
-http://sketchup.google.com/3dwarehouse
+*  http://robotvault.bitbucket.org/ (complete indoor scens , but there is no texture for now)
+* http://sketchup.google.com/3dwarehouse
 	quite a few kitchen and living rooms, not really realistic models in general
-
-http://resources.blogscopia.com
+* http://resources.blogscopia.com
  	license : Creative Commons 3.0 Unported ( http://resources.blogscopia.com/license-2/)	
 	furnitures but not complete scenes
 	exemple
 	contemp_living_room_sh3d.zip
 	contemp_living_room_obj.zip
+*	http://en.wikibooks.org/wiki/Blender_3D:_Noob_to_Pro/Sources_of_free_3D_models (website listing most websites that offer 3D models with a short description :)
 
 
 ## references
