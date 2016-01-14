@@ -78,7 +78,7 @@ run the python script test_vapory.py:
 
 	python test_vapory.py
 
-it will create the images show in the examples above
+it will create the images shown in the examples above in a the tmp subfolder
 
 #TODO
 
