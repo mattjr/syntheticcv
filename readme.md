@@ -146,9 +146,11 @@ The paper [2] describes the methodology and modications than have been done to b
 # Questions
 
 * Why using random scenes instead of sintel scene (http://sintel.is.tue.mpg.de/stereo)? 
+
 	the sintel movie contains many curvy object and might not be suited to train or test methods that work for man made objects with piecwise planar surfaces like urban scenes. The dataset is also limited , while we can generate un unlimited amount of data. Using our own random scene, we have a better control on the scene properties, we can control the amount of texture, specularities etc. This comes at the cost of having scene that may not have stastics that are similar to natural images.
 
 * Why not using a blender scripts ?
+
 	that coudl be a good alternative (see section above about blender) using python scripts inside blender, but we may need to  modify blender's C++ source code ti implement some of the aimed functionalities
 
 
@@ -207,6 +209,6 @@ http://resources.blogscopia.com
 Christian Unger, Slobodan Ilic. Pattern Recognition 2013 [project page](http://campar.in.tum.de/Chair/ProjectSyntheticDataset)
 [github page](https://github.com/haltakov/synthetic-dataset)
 
-[4] *Learning a Confidence Measure for Optical Flow* Mac Aodha, O., Humayun, A., Pollefeys, M., Brostow, G.J. PAMI 2012 [paper](https://www.inf.ethz.ch/personal/pomarc/pubs/MacAodhaPAMI12.pdf)[code](http://visual.cs.ucl.ac.uk/pubs/flowConfidence/GetFlowv1.2.zip)
+[4] *Learning a Confidence Measure for Optical Flow* Mac Aodha, O., Humayun, A., Pollefeys, M., Brostow, G.J. PAMI 2012 [paper](https://www.inf.ethz.ch/personal/pomarc/pubs/MacAodhaPAMI12.pdf) [code](http://visual.cs.ucl.ac.uk/pubs/flowConfidence/GetFlowv1.2.zip)
 
 
