@@ -67,9 +67,11 @@ This has the advantage of beeing more flexible that using a pached version of po
 
 ## linux (tested on ubuntu)
 
-in a terminal go in the folder than contains the script install.sh and run it by typing 
-	
-	./install.sh
+in a terminal go in the folder than contains the script install.sh and run it by typing
+
+	hg clone ssh://hg@bitbucket.org/martin_delagorce/syntheticcv 
+	cd syntheticcv
+	sh install.sh
 
 
 ## testing 
