@@ -65,6 +65,7 @@ make
 make install
 cd ..
 echo $PWD
+ls
 
 echo "compilling and modifying megapov default configuration files"
 sed -i 's/;none /none /g' $PWD/megapov/etc/megapov/1.2.1/povray.conf
