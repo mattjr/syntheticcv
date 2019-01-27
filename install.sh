@@ -30,7 +30,8 @@ cd libpng-1.5.26
 make check
 make install
 cd ..
-
+echo "TEST"
+ls
 
 echo "installing povray 3.6.1 locally, assuming libpng12 is the library installed globally in the system"
 tar -jxjf povray-3.6.1.tar.bz2
