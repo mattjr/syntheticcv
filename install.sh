@@ -11,7 +11,7 @@ cd thirdparties
 
 echo "dwonloading all thirdparties" 
 wget http://github.com/devernay/vlpovutils/archive/71890a3acc8501f674795285aa69669f15c95f69/master.zip --no-check-certificate -O vlpovutils.zip
-wget http://sourceforge.net/projects/libpng/files/libpng15/1.5.26/libpng-1.5.26.tar.gz
+wget https://sourceforge.net/projects/libpng/files/libpng15/older-releases/1.5.26/libpng-1.5.26.tar.gz/download -O libpng-1.5.26.tar.gz
 wget http://megapov.inetart.net/packages/unix/megapov-1.2.1.tgz
 wget http://www.povray.org/ftp/pub/povray/Old-Versions/Official-3.62/Unix/povray-3.6.1.tar.bz2
 
@@ -20,6 +20,7 @@ unzip vlpovutils.zip
 rm vlpovutils.zip
 mv vlpovutils-71890a3acc8501f674795285aa69669f15c95f69 vlpovutils
 
+export MAKEFLAGS="-j $(grep -c ^processor /proc/cpuinfo)"
 
 echo "installing libpng1.5 locally"
 
@@ -34,20 +35,20 @@ cd ..
 echo "installing povray 3.6.1 locally, assuming libpng12 is the library installed globally in the system"
 tar -jxjf povray-3.6.1.tar.bz2
 cd povray-3.6.1/
-./configure --prefix=$PWD/../megapov --with-x COMPILED_BY="martin.de-la-gorce@enpc.fr" 
-make
-make install 
+#./configure --prefix=$PWD/../megapov --with-x COMPILED_BY="martin.de-la-gorce@enpc.fr" 
+#if you get undefined reference to "png_write_finish_row'
+cp  $PWD/../libpng15/lib/libpng15.so.15 $PWD/../libpng15/lib/libpng12.so
+export CPPFLAGS=-I$PWD/../libpng15/include
+export LDFLAGS=-L$PWD/../libpng15/lib
+./configure --prefix=$PWD/../megapov --with-x COMPILED_BY="martin.de-la-gorce@enpc.fr"  --disable-lib-checks
+make 
+make install
 sed -i 's/;none /none /g' $PWD/../megapov/etc/povray/3.6/povray.conf
 sed -i 's/restricted /;restricted /g' $PWD/../megapov/etc/povray/3.6/povray.conf
 cd ..
 
 
-#if you get undefined reference to "png_write_finish_row'
-# cp  $PWD/../libpng15/lib/libpng15.so.15 $PWD/../libpng15/lib/libpng12.so
-# export CPPFLAGS=-I$PWD/../libpng15/include
-# export LDFLAGS=-L$PWD/../libpng15/lib
-#./configure --prefix=$PWD/../megapov --with-x COMPILED_BY="martin.de-la-gorce@enpc.fr"  --disable-lib-checks
-# make 
+
 
 
 
@@ -63,7 +64,7 @@ export LDFLAGS=-L$PWD/../libpng15/lib
 make 
 make install
 cd ..
-
+echo $PWD
 
 echo "compilling and modifying megapov default configuration files"
 sed -i 's/;none /none /g' $PWD/megapov/etc/megapov/1.2.1/povray.conf
